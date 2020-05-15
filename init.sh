@@ -30,4 +30,19 @@ if [ "$0" != "init.sh" ]; then
   exec bash init.sh
 fi
 
-echo incepem acum
+echo
+echo "Pregatim sistemul de operare pentru a instala cateva programe"
+echo
+sudo apt update
+
+echo
+echo "Acum instalam ansible (pentru automatizarile urmatoare)"
+echo
+sudo apt install -y ansible
+
+echo
+echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
+echo
+sudo apt install -y atop htop figlet
+
+figlet buna/salut
