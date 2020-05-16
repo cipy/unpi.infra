@@ -24,7 +24,7 @@ if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
 if [ "$0" != "init.sh" ]; then
   # forteza un download al ultimei versiuni init.sh
   wget -q https://infra.unpi.ro/init.sh -O init.sh
-  # sterge download-urile facute manual daca sunt
+  # sterge download-urile facute manual, daca sunt
   rm -f init.sh.*
   # ruleaza acum ultima versiune init.sh
   exec bash init.sh
