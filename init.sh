@@ -46,3 +46,13 @@ echo
 sudo apt install -y atop htop figlet
 
 figlet buna/salut
+
+# se ruleaza pe un Raspberry Pi / unPi?
+if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
+  echo
+  echo -n "Calculatorul tau este un " && cat /proc/device-tree/model && echo
+  echo "Temperatura procesorului central este acum $(vcgencmd measure_temp | cut -d= -f2) grade"
+  echo "Frecventa procesorului este acum $(vcgencmd measure_clock arm | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
+  echo "Frecventa placii de baza este $(vcgencmd measure_clock core | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
+  echo
+fi
