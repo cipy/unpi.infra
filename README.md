@@ -1,4 +1,4 @@
 # unpi.infra
-Infrastructura, automatizare in fundal pentru proiectul unPi.ro
+Infrastructura, automatizare în fundal pentru proiectul unPi.ro
 
-#### in lucru // apare in curand // under construction
+#### în lucru // apare în curând // under construction
