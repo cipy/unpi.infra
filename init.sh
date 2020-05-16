@@ -31,19 +31,23 @@ if [ "$0" != "init.sh" ]; then
 fi
 
 echo
-echo "Pregatim sistemul de operare pentru a instala cateva programe"
+echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
 sudo apt update
 
-echo
-echo "Acum instalam ansible (pentru automatizarile urmatoare)"
-echo
-sudo apt install -y ansible
+if ! which ansible &> /dev/null; then
+  echo
+  echo "Acum instalam ansible (pentru automatizarile urmatoare)"
+  echo
+  sudo apt install -y ansible
+fi
 
-echo
-echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
-echo
-sudo apt install -y atop htop figlet
+if ! which atop htop figlet &> /dev/null; then
+  echo
+  echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
+  echo
+  sudo apt install -y atop htop figlet
+fi
 
 figlet buna/salut
 
