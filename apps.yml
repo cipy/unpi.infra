@@ -52,14 +52,20 @@
        name: gcompris
      become: yes
 
-   - name: "Instalam limbajele de programare Scratch v3 si Golang"
+   - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
-       name: scratch3,golang
+       name: scratch3,omxplayer
+     become: yes
+     when: ansible_lsb.id == "Raspbian"
+
+   - name: "Instalam limbajul de programare profesional Golang"
+     apt:
+       name: golang
      become: yes
 
    - name: "Instalam programe utilitare pentru cursul de programare"
      apt:
-       name: git,asciinema,omxplayer,vlc
+       name: git,nano,asciinema,vlc,bc
      become: yes
 
    - name: "Stergem versiunile vechi (v1, v2) ale programului Scratch"
@@ -67,7 +73,7 @@
        name: scratch,scratch2
        state: absent
      become: yes
-     when: beneficiar
+     when: beneficiar and ansible_lsb.id == "Raspbian"
 
    - name: "Instalam cele mai noi aplicatii pentru calculatorul tau"
      apt:
