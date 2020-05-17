@@ -39,7 +39,8 @@ if ! which ansible &> /dev/null; then
   echo
   echo "Acum instalam ansible (pentru automatizarile urmatoare)"
   echo
-  sudo apt install -y ansible
+  sudo apt install -y ansible python-dnspython python3-dnspython \
+    python-passlib python3-passlib python-scrypt python3-scrypt
 fi
 
 if ! which atop htop figlet &> /dev/null; then
