@@ -52,7 +52,7 @@
        name: gcompris
      become: yes
 
-   - name: "Instalam limbajele de programare Scratch 3 si Golang"
+   - name: "Instalam limbajele de programare Scratch v3 si Golang"
      apt:
        name: scratch3,golang
      become: yes
@@ -62,7 +62,7 @@
        name: git,asciinema,omxplayer,vlc
      become: yes
 
-   - name: "Stergem versiunile vechi (v1, v2) ale programului Scrach"
+   - name: "Stergem versiunile vechi (v1, v2) ale programului Scratch"
      apt:
        name: scratch,scratch2
        state: absent
