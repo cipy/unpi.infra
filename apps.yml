@@ -33,16 +33,39 @@
        state: directory
      become: yes
 
-   - name: "Salvez raspunsul la intrebarea despre beneficiar"
+   - name: "Salvez raspunsul la intrebarea daca esti BENEFICIAR"
      copy:
        dest: /root/.unpi/esteundar
        mode: u=rw,g=,o=
        content: "{{ esteundar }}"
      become: yes
 
-   - name: "Salvez raspunsul la intrebarea despre codul unPi"
+   - name: "Salvez raspunsul la intrebarea despre PAROLA ta unPi"
      copy:
        dest: /root/.unpi/hashedcode
        mode: u=rw,g=,o=
        content: "{{ hashedcode }}"
+     become: yes
+     
+   - name: "Instalam mediul educational GCompris"
+     apt:
+       name: gcompris
+     become: yes
+
+   - name: "Instalam limbajele de programare Scratch 3 si Golang"
+     apt:
+       name: git,scratch3,golang
+     become: yes
+
+   - name: "Stergem versiunile vechi (v1, v2) ale programului Scrach"
+     apt:
+       name: scratch,scratch2
+       state: absent
+     become: yes
+     when: beneficiar
+
+   - name: "Instalam cele mai noi aplicatii pentru calculatorul tau"
+     apt:
+       upgrade: full
+       update_cache: yes
      become: yes
