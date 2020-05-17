@@ -25,7 +25,7 @@ if [ "$0" != "init.sh" ]; then
   # forteza un download al ultimei versiuni init.sh
   wget -q https://infra.unpi.ro/init.sh -O init.sh
   # sterge download-urile facute manual, daca sunt
-  rm -f init.sh.*
+  rm -f index.html init.sh.*
   # ruleaza acum ultima versiune init.sh
   exec bash init.sh
 fi
