@@ -61,3 +61,10 @@ if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
   echo "Frecventa placii de baza este $(vcgencmd measure_clock core | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
   echo
 fi
+
+echo "Pregatim calculatorul tau personal unPi pentru configurare"
+echo
+wget -q https://infra.unpi.ro/apps.yml -O apps.yml
+
+export ANSIBLE_STDOUT_CALLBACK=unixy
+ansible-playbook -i localhost, apps.yml
