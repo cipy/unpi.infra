@@ -1,0 +1,48 @@
+---
+- hosts: localhost
+  connection: local
+
+  vars_prompt:
+
+  - name: esteundar
+    prompt: "Esti un BENEFICIAR al Asociatiei unPi pentru Scolari?"
+    private: no
+    default: "DA"
+
+  - name: hashedcode
+    prompt: "Care este CODUL pe care l-ai primit de la Asociatia unPi?"
+    encrypt: "scrypt"
+    salt: "@unPi"
+    private: no
+    confirm: yes
+
+  tasks:
+
+   # este beneficiar daca a primit unPi in dar
+   - set_fact: beneficiar=true verificat=false
+     when: esteundar | upper == "DA" or esteundar | bool
+
+   # nu este beneficiar daca nu a primit unPi in dar
+   - set_fact: beneficiar=false verificat=false
+     when: esteundar | upper != "DA" and not esteundar | bool
+
+   - name: "Pregatesc un director pentru configuratia unPi"
+     file:
+       dest: "/root/.unpi"
+       mode: u=rwx,g=,o=
+       state: directory
+     become: yes
+
+   - name: "Salvez raspunsul la intrebarea despre beneficiar"
+     copy:
+       dest: /root/.unpi/esteundar
+       mode: u=rw,g=,o=
+       content: "{{ esteundar }}"
+     become: yes
+
+   - name: "Salvez raspunsul la intrebarea despre codul unPi"
+     copy:
+       dest: /root/.unpi/hashedcode
+       mode: u=rw,g=,o=
+       content: "{{ hashedcode }}"
+     become: yes
