@@ -30,6 +30,18 @@ if [ "$0" != "init.sh" ]; then
   exec bash init.sh
 fi
 
+function stats {
+# se ruleaza pe un Raspberry Pi / unPi?
+if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
+  echo
+  echo -n "Calculatorul tau este un " && cat /proc/device-tree/model && echo
+  echo "Temperatura procesorului central este acum $(vcgencmd measure_temp | cut -d= -f2) grade"
+  echo "Frecventa procesorului este acum $(vcgencmd measure_clock arm | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
+  echo "Frecventa placii de baza este $(vcgencmd measure_clock core | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
+  echo
+fi
+}
+
 echo
 echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
@@ -50,17 +62,9 @@ if ! which atop htop figlet &> /dev/null; then
   sudo apt install -y atop htop figlet
 fi
 
+echo
 figlet buna/salut
-
-# se ruleaza pe un Raspberry Pi / unPi?
-if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
-  echo
-  echo -n "Calculatorul tau este un " && cat /proc/device-tree/model && echo
-  echo "Temperatura procesorului central este acum $(vcgencmd measure_temp | cut -d= -f2) grade"
-  echo "Frecventa procesorului este acum $(vcgencmd measure_clock arm | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
-  echo "Frecventa placii de baza este $(vcgencmd measure_clock core | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
-  echo
-fi
+stats
 
 echo "Pregatim calculatorul tau personal unPi pentru configurare"
 echo
@@ -68,3 +72,7 @@ wget -q https://infra.unpi.ro/apps.yml -O apps.yml
 
 export ANSIBLE_STDOUT_CALLBACK=unixy
 ansible-playbook -i localhost, apps.yml
+
+echo
+figlet spor la studiu
+stats
