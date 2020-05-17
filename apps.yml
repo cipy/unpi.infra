@@ -50,7 +50,7 @@
        content: "{{ hashedcode }}"
      become: yes
      
-   - name: "Instalam mediul educational GCompris"
+   - name: "Instalam mediul educational GCompris pentru copii"
      apt:
        name: gcompris
      become: yes
