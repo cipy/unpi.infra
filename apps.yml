@@ -54,7 +54,12 @@
 
    - name: "Instalam limbajele de programare Scratch 3 si Golang"
      apt:
-       name: git,scratch3,golang
+       name: scratch3,golang
+     become: yes
+
+   - name: "Instalam programe utilitare pentru cursul de programare"
+     apt:
+       name: git,asciinema,omxplayer,vlc
      become: yes
 
    - name: "Stergem versiunile vechi (v1, v2) ale programului Scrach"
