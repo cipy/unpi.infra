@@ -10,7 +10,7 @@
     default: "DA"
 
   - name: hashedcode
-    prompt: "Care este CODUL pe care l-ai primit de la Asociatia unPi?"
+    prompt: "Care este PAROLA pe care ai primit-o de la Asociatia unPi?"
     encrypt: "scrypt"
     salt: "@unPi"
     private: no
