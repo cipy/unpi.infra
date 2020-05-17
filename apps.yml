@@ -1,3 +1,6 @@
+# automatizare unPi cu ansible :: doar pentru Raspbian OS/apps
+# sub licenta BSD-3, copyright Ciprian Manea <ciprian@unpi.ro>
+# unPi ® este o marca inregistrata in Romania de Ciprian Manea
 ---
 - hosts: localhost
   connection: local
