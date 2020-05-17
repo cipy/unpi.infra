@@ -78,6 +78,13 @@
      become: yes
      when: beneficiar and ansible_lsb.id == "Raspbian"
 
+   - name: "Stergem editoarele ce nu vor fi folosite in cursurile unPi"
+     apt:
+       name: geany*,bluej,greenfoot*,smartsim
+       state: absent
+     become: yes
+     when: beneficiar and ansible_lsb.id == "Raspbian"
+
    - name: "Instalam cele mai noi aplicatii pentru calculatorul tau"
      apt:
        upgrade: full
