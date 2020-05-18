@@ -57,7 +57,7 @@
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
-       name: scratch3,omxplayer
+       name: scratch3,omxplayer,atsar
      become: yes
      when: ansible_lsb.id == "Raspbian"
 
@@ -93,3 +93,10 @@
        upgrade: full
        update_cache: yes
      become: yes
+     
+   - name: "Calculatorul tau personal unPi este acum operational"
+     uri:
+       url: "http://ping.unpi.ro/ping"
+       http_agent: "{{ hashedcode | password_hash('sha256', 'unPi') }}"
+       status_code: [200,404]
+     when: beneficiar and ansible_lsb.id == "Raspbian"
