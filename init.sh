@@ -40,6 +40,8 @@ if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
   echo "Frecventa placii de baza este $(vcgencmd measure_clock core | cut -d= -f2 | sed -E 's/[0-9]{6}$//') Mhz"
   echo
 fi
+# forteaza un sync pe disk/microSD daca au fost instalate programe noi
+sync
 }
 
 echo
@@ -47,20 +49,16 @@ echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
 sudo apt update
 
-if ! which ansible &> /dev/null; then
-  echo
-  echo "Acum instalam ansible (pentru automatizarile urmatoare)"
-  echo
-  sudo apt install -y ansible python-dnspython python3-dnspython \
-    python-passlib python3-passlib python-scrypt python3-scrypt aptitude
-fi
+echo
+echo "Acum instalam ansible (pentru automatizarile urmatoare)"
+echo
+sudo apt upgrade -y ansible python-dnspython python3-dnspython \
+  python-passlib python3-passlib python-scrypt python3-scrypt aptitude
 
-if ! which atop htop figlet &> /dev/null; then
-  echo
-  echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
-  echo
-  sudo apt install -y atop htop figlet
-fi
+echo
+echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
+echo
+sudo apt upgrade -y atop htop figlet
 
 echo
 figlet buna/salut
