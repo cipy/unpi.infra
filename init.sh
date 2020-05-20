@@ -44,10 +44,12 @@ fi
 sync
 }
 
+export DEBIAN_FRONTEND=noninteractive
+
 echo
 echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
-sudo apt update
+sudo apt update -y
 
 echo
 echo "Acum instalam ansible (pentru automatizarile urmatoare)"
