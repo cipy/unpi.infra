@@ -9,7 +9,7 @@ ERR_INET="Imi pare rau, dar trebuie sa fii online, conectat la Internet"
 
 trap ctrl_c INT
 
-function ctrl_c()
+function ctrl_c
 {
   say=$(which figlet || which echo)
   echo
