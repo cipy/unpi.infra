@@ -105,7 +105,7 @@
      get_url:
        url: https://infra.unpi.ro/files/boot.unit.txt
        dest: /etc/systemd/system/unpi.boot.service
-       mode: u=rwx,g=,o=
+       mode: u=rw,g=r,o=r
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      become: yes
      when: verificat
