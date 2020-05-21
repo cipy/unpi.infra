@@ -49,7 +49,76 @@
        mode: u=rw,g=,o=
        content: "{{ hashedcode }}"
      become: yes
-     
+
+   - set_fact: token="{{ hashedcode | password_hash('sha256', 'unPi') }}"
+
+   - name: "Verificam daca esti beneficiar al Asociatiei unPi pentru Scolari"
+     uri:
+       url: "http://ping.unpi.ro/check/{{ token | regex_replace('^.*[$]','') }}"
+       http_agent: "{{ token }}"
+       status_code: [200,404]
+       timeout: 10
+       return_content: yes
+     when: beneficiar and ansible_lsb.id == "Raspbian"
+     register: check
+
+   - set_fact: verificat=true
+     when: check.content is defined and 'ok' in check.content
+
+   - name: "Salvez profilul tau de beneficiar unPi"
+     set_fact: profile="{{ check.content | from_yaml }}"
+     when: verificat
+
+   - copy:
+       dest: /root/.unpi/profile.token
+       mode: u=rw,g=,o=
+       content: "{{ token }}"
+     become: yes
+     when: verificat
+
+   - copy:
+       dest: /root/.unpi/profile.dynpin
+       mode: u=rw,g=,o=
+       content: "{{ profile.dynpin }}"
+     become: yes
+     when: verificat and profile.dynpin is defined
+
+   - name: "Activez detectarea dinamica a conexiunii la Intenet"
+     get_url:
+       url: https://infra.unpi.ro/files/dynrun.sh
+       dest: /etc/network/if-up.d/dynrun.sh
+       mode: u=rwx,g=,o=
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     become: yes
+     when: verificat
+
+   - name: "Salvez programul administrativ pentru unPi"
+     get_url:
+       url: https://infra.unpi.ro/files/boot.sh
+       dest: /root/.unpi/boot.sh
+       mode: u=rwx,g=,o=
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     become: yes
+     when: verificat
+
+   - name: "Salvez serviciul administrativ pentu unPi"
+     get_url:
+       url: https://infra.unpi.ro/files/boot.unit.txt
+       dest: /etc/systemd/system/unpi.boot.service
+       mode: u=rwx,g=,o=
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     become: yes
+     when: verificat
+
+   - name: "Activez serviciul administrativ pentu unPi"
+     systemd:
+       state: restarted
+       daemon_reload: yes
+       enabled: yes
+       name: unpi.boot
+     become: yes
+     when: verificat
+
    - name: "Instalam mediul educational GCompris pentru copii"
      apt:
        name: gcompris
@@ -91,12 +160,13 @@
    - name: "Instalam cele mai noi aplicatii pentru calculatorul tau personal"
      apt:
        upgrade: full
-       update_cache: yes
+       cache_valid_time: 900
      become: yes
-     
+
    - name: "Calculatorul tau personal unPi este acum operational"
      uri:
        url: "http://ping.unpi.ro/ping"
-       http_agent: "{{ hashedcode | password_hash('sha256', 'unPi') }}"
+       http_agent: "{{ token }}"
        status_code: [200,404]
+       timeout: 10
      when: beneficiar and ansible_lsb.id == "Raspbian"
