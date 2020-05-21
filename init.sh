@@ -18,17 +18,23 @@ function ctrl_c
 }
 
 # se ruleaza pe un Linux OS?
-linuxos="$(which lsb_release)"
-if [ -z "$linuxos" ]; then echo $ERR_NOOS; exit 1; fi
+if [ ! -f /etc/issue ]; then echo $ERR_NOOS; exit 1; fi
 
+linuxos="$(cat /etc/issue)"
 # se ruleaza pe Raspbian sau Debian Linux?
-if [[ ! "$(lsb_release -d)" =~ "bian" ]]; then echo $ERR_NOOS; exit 1; fi
-
-# seamana cu Rasbian OS dar este Debian/WSL poate?
-if ! which apt sudo wget &> /dev/null; then echo $ERR_NOOS; exit 1; fi
+if [[ ! "$linux" =~ "bian" ]]; then echo $ERR_NOOS; exit 1; fi
 
 # exista o conexiune online la Intenet?
 if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
+
+export DEBIAN_FRONTEND=noninteractive
+
+# este un Debian/Linux OS minim, sau Debian/WSL pe Windows?
+if ! which wget lsb_release &> /dev/null; then
+  echo "Trebuie sa instalam mai intai aplicatia wget, te rog astepta putin"
+  sudo apt update -y
+  sudo apt install -y wget lsb-release
+fi
 
 # rulez scriptul init.sh corect?
 if [ "$0" != "init.sh" ]; then
@@ -54,8 +60,6 @@ function stats
   # forteaza un sync pe disk/microSD daca au fost instalate programe noi
   sync
 }
-
-export DEBIAN_FRONTEND=noninteractive
 
 echo
 echo "Pregatim sistemul de operare pentru a instala programe noi"
