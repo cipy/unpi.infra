@@ -31,7 +31,9 @@ export DEBIAN_FRONTEND=noninteractive
 
 # este un Debian/Linux OS minim, sau Debian/WSL pe Windows?
 if ! which wget lsb_release &> /dev/null; then
+  echo
   echo "Trebuie sa instalam mai intai aplicatia wget, te rog astepta putin"
+  echo
   sudo apt update -y
   sudo apt install -y wget lsb-release
 fi
