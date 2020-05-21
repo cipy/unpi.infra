@@ -123,7 +123,7 @@
      apt:
        name: gcompris
      become: yes
-     when: 'WINDOWS' not in ansible_env.PATH
+     when: "'WINDOWS' not in ansible_env.PATH"
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
