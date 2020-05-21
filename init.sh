@@ -51,16 +51,23 @@ echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
 sudo apt update -y
 
-echo
-echo "Acum instalam ansible (pentru automatizarile urmatoare)"
-echo
-sudo apt upgrade -y ansible python-dnspython python3-dnspython \
-  python-passlib python3-passlib python-scrypt python3-scrypt aptitude
+py2d="$(dpkg -l | grep python- | grep -E '(dns|scrypt)' | wc -l)"
+py3d="$(dpkg -l | grep python3- | grep -E '(dns|scrypt)' | wc -l)"
+# daca lipsesc oricare din dependinte, instaleaza-le pe toate
+if ! which ansible &> /dev/null || [ "$py2d" -lt 2 -o "$py3d" -lt 2 ]; then
+  echo
+  echo "Acum instalam ansible (pentru automatizarile urmatoare)"
+  echo
+  sudo apt install -y ansible python-dnspython python3-dnspython \
+    python-passlib python3-passlib python-scrypt python3-scrypt aptitude
+fi
 
-echo
-echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
-echo
-sudo apt upgrade -y atop htop figlet
+if ! which atop htop figlet &> /dev/null; then
+  echo
+  echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
+  echo
+  sudo apt install -y atop htop figlet
+fi
 
 echo
 figlet buna/salut
