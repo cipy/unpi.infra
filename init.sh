@@ -22,7 +22,7 @@ if [ ! -f /etc/issue ]; then echo $ERR_NOOS; exit 1; fi
 
 linuxos="$(cat /etc/issue)"
 # se ruleaza pe Raspbian sau Debian Linux?
-if [[ ! "$linux" =~ "bian" ]]; then echo $ERR_NOOS; exit 1; fi
+if [[ ! "$linuxos" =~ "bian" ]]; then echo $ERR_NOOS; exit 1; fi
 
 # exista o conexiune online la Intenet?
 if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
