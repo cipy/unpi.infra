@@ -9,7 +9,8 @@ ERR_INET="Imi pare rau, dar trebuie sa fii online, conectat la Internet"
 
 trap ctrl_c INT
 
-function ctrl_c() {
+function ctrl_c()
+{
   say=$(which figlet || which echo)
   echo
   $say CTRL-C, STOP
@@ -39,7 +40,8 @@ if [ "$0" != "init.sh" ]; then
   exec bash init.sh
 fi
 
-function stats {
+function stats
+{
   # se ruleaza pe un Raspberry Pi / unPi?
   if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
     echo
