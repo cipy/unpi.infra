@@ -64,6 +64,7 @@ sudo apt update -y
 
 py2d="$(dpkg -l | grep python- | grep -E '(dns|scrypt)' | wc -l)"
 py3d="$(dpkg -l | grep python3- | grep -E '(dns|scrypt)' | wc -l)"
+
 # daca lipsesc oricare din dependinte, instaleaza-le pe toate
 if ! which ansible &> /dev/null || [ "$py2d" -lt 2 -o "$py3d" -lt 2 ]; then
   echo
