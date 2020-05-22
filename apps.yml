@@ -155,6 +155,11 @@
      become: yes
      when: beneficiar and ansible_lsb.id == "Raspbian"
 
+   - name: "Activez instalarea automata a programelor din sistemul de operare"
+     apt:
+       name: unattended-upgrades,apt-listchanges
+     become: yes
+
    - name: "(pasul urmator va dura mai mult, depinzand de conexiunea ta la Internet)"
      shell: echo; figlet te rog, asteapta
 
