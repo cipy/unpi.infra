@@ -127,7 +127,7 @@
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
-       name: scratch3,omxplayer,sysstat
+       name: scratch3,omxplayer,atsar
      become: yes
      when: ansible_lsb.id == "Raspbian"
 
@@ -143,7 +143,7 @@
 
    - name: "Stergem versiunile vechi (v1, v2) ale programului Scratch"
      apt:
-       name: scratch,scratch2,atsar
+       name: scratch,scratch2
        state: absent
      become: yes
      when: beneficiar and ansible_lsb.id == "Raspbian"
