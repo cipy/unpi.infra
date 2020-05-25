@@ -146,6 +146,7 @@
        regexp: "^(.*)ENABLED=(.*)"
        line: 'ENABLED="true"'
        path: /etc/default/sysstat
+     become: yes
 
    - name: "Stergem versiunile vechi (v1, v2) ale programului Scratch"
      apt:
