@@ -24,7 +24,9 @@ linuxos="$(cat /etc/issue)"
 # se ruleaza pe Raspbian sau Debian Linux?
 if [[ ! "$linuxos" =~ "bian" ]]; then echo $ERR_NOOS; exit 1; fi
 
+echo
 # exista o conexiune online la Intenet?
+echo "Verific conexiunea ta la Internet"
 if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
 
 export DEBIAN_FRONTEND=noninteractive
