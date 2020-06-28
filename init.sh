@@ -98,7 +98,20 @@ echo
 wget -q https://infra.unpi.ro/apps.yml -O apps.yml
 
 export ANSIBLE_STDOUT_CALLBACK=unixy
-ansible-playbook -i localhost, apps.yml
+[ -s apps.yml ] && ansible-playbook -i localhost, apps.yml
+
+# este unPi?
+if [ -f /proc/device-tree/model ]; then
+  # este un Pi Zero WH? adica unPi mini
+  if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero" ]]; then
+    echo "Acum facem o configurare specifica pentru unPi mini"
+    echo
+    wget -q https://infra.unpi.ro/zero.yml -O zero.yml
+
+    export ANSIBLE_STDOUT_CALLBACK=unixy
+    [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
+  fi
+fi
 
 echo
 figlet spor la studiu
