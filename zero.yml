@@ -1,0 +1,31 @@
+# automatizare unPi cu ansible :: doar pentru Raspbian OS/apps
+# sub licenta BSD-3, copyright Ciprian Manea <ciprian@unpi.ro>
+# unPi ® este o marca inregistrata in Romania de Ciprian Manea
+---
+- hosts: localhost
+  gather_facts: no
+  connection: local
+
+  tasks:
+    - name: "Instalam modulul Blinkt (cele 8 LED ale unPi mini)"
+      apt:
+        name: python-blinkt,python3-blinkt
+      become: yes
+
+    - name: "Aducem un program exemplu pentru modulul Blinkt"
+      uri:
+        url: "https://raw.githubusercontent.com/pimoroni/blinkt/master/examples/random_blink_colours.py"
+        status_code: [200,404]
+        timeout: 10
+        return_content: yes
+      register: blink
+
+    - copy:
+        dest: ~/blink
+        mode: u=rwx,g=,o=
+        content: "{{ blink.content }}"
+      when: blink.content is defined
+
+    - name: "Modulul Blinkt va arata acum culori la intamplare"
+      shell: timeout 10m ~/blink &
+      when: blink.content is defined
