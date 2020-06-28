@@ -63,7 +63,7 @@
      register: check
 
    - set_fact: verificat=true
-     when: check.content is defined and 'ok' in check.content
+     when: check.status == 200 and check.content is defined and 'ok' in check.content
 
    - name: "Salvez profilul tau de beneficiar unPi"
      set_fact: profile="{{ check.content | from_yaml }}"
