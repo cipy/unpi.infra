@@ -50,11 +50,11 @@
        content: "{{ hashedcode }}"
      become: yes
 
-   - set_fact: token="{{ hashedcode | password_hash('sha256', 'unPi') }}"
+   - set_fact: token="{{ hashedcode | password_hash('sha256', 'unPi') | regex_replace('^.*[$]','') | regex_replace('[./]','') }}"
 
    - name: "Verificam daca esti beneficiar al Asociatiei unPi pentru Scolari"
      uri:
-       url: "http://ping.unpi.ro/check/{{ token | regex_replace('^.*[$]','') }}"
+       url: "http://ping.unpi.ro/check/{{ token }}"
        http_agent: "{{ token }}"
        status_code: [200,404]
        timeout: 10
