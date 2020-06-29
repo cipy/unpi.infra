@@ -100,7 +100,6 @@ wget -q https://infra.unpi.ro/apps.yml -O apps.yml
 export ANSIBLE_STDOUT_CALLBACK=unixy
 [ -s apps.yml ] && ansible-playbook -i localhost, apps.yml
 
-# este unPi?
 if [ -f /proc/device-tree/model ]; then
   # este un Pi Zero WH? adica unPi mini
   if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero" ]]; then
