@@ -83,7 +83,7 @@
      become: yes
      when: verificat and profile.dynpin is defined
 
-   - name: "Activez detectarea dinamica a conexiunii la Intenet"
+   - name: "Activez detectarea dinamica a conexiunii la Internet"
      get_url:
        url: https://infra.unpi.ro/files/dynrun.sh
        dest: /etc/network/if-up.d/dynrun.sh
@@ -129,6 +129,20 @@
      apt:
        name: scratch3,omxplayer
      become: yes
+     when: ansible_lsb.id == "Raspbian"
+
+   - name: "Creez un link pe Desktop pentru imnul unPi"
+     get_url:
+       url: https://infra.unpi.ro/files/imn.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     when: ansible_lsb.id == "Raspbian"
+
+   - name: "Creez un link pe Desktop pentru cursul de Scratch"
+     get_url:
+       url: https://infra.unpi.ro/files/scratch.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      when: ansible_lsb.id == "Raspbian"
 
    - name: "Instalam limbajul de programare profesional Golang"
