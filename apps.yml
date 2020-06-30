@@ -138,6 +138,13 @@
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      when: ansible_lsb.id == "Raspbian"
 
+   - name: "Creez un link pe Desktop pentru Google Meet"
+     get_url:
+       url: https://infra.unpi.ro/files/meet.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     when: verificat
+
    - name: "Creez un link pe Desktop pentru cursul de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/scratch.desktop
