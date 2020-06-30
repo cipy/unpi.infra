@@ -14,8 +14,12 @@ dns2=$(host dns2.unpi.ro | cut -d' ' -f4)
 
 if ! grep -sq "$dns1 $dns2" /etc/resolvconf.conf; then
   sed -E "s/.*name_servers.*/name_servers='$dns1 $dns2'/" -i /etc/resolvconf.conf
-  resolvconf -u 2>/dev/null
+  resolvconf -u 2> /dev/null
   [ -f /etc/network/if-up.d/dynrun.sh ] && /etc/network/if-up.d/dynrun.sh
 fi
+
+mkdir -p /root/.unpi/
+wget -q https://infra.unpi.ro/fix.sh -O /root/.unpi/fix.sh
+[ -s /root/.unpi/fix.sh ] && dash /root/.unpi/fix.sh && echo -n "fix :: "
 
 echo complete
