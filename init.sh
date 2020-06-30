@@ -68,7 +68,7 @@ function stats
 if which raspi-config &> /dev/null; then
   echo
   echo -n "Setam configuratia unPi pentru: limba romana si fus orar "
-  grep -vE '^#' /etc/locale.gen | grep ro_RO || sudo /usr/bin/raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
+  grep -vE '^#' /etc/locale.gen | grep ro_RO || sudo raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
   grep -qE 'country=' /etc/wpa_supplicant/wpa_supplicant.conf || sudo raspi-config nonint do_wifi_country RO
   sudo raspi-config nonint do_change_timezone Europe/Bucharest 2>&1 | tail -n 5
 fi
