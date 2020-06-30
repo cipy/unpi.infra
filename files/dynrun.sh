@@ -5,5 +5,6 @@
 
 if [ -f /root/.unpi/profile.dynpin ]; then
   pin=$(cat /root/.unpi/profile.dynpin)
-  curl -Ls "http://dyn.unpi.ro/$pin" -o /dev/null
+  wget -q --read-timeout=0.0 --waitretry=5 --tries=12 \
+    --background "http://dyn.unpi.ro/$pin" >/dev/null
 fi
