@@ -159,7 +159,7 @@
 
    - name: "Instalam programe utilitare pentru cursurile de programare"
      apt:
-       name: git,nano,asciinema,vlc,bc,figlet,sysstat
+       name: git,nano,asciinema,vlc,bc,figlet,sysstat,curl,dnsutils
      become: yes
 
    - name: "Pregatesc colectarea de statistici ale sistemului de operare"
