@@ -5,7 +5,7 @@
 # unPi ® este o marca inregistrata in Romania de Ciprian Manea
 
 ERR_NOOS="Imi pare rau, doar Raspbian/Linux OS este recomandat pentru unPi"
-ERR_INET="Imi pare rau, dar trebuie sa fii online, conectat la Internet"
+ERR_INET="Imi pare rau, dar trebuie sa fii online, conectat la Internet!"
 
 trap ctrl_c INT
 
@@ -34,7 +34,7 @@ export DEBIAN_FRONTEND=noninteractive
 # este un Debian/Linux OS minim, sau Debian/WSL pe Windows?
 if ! which wget lsb_release &> /dev/null; then
   echo
-  echo "Trebuie sa instalam mai intai aplicatia wget, te rog astepta putin"
+  echo "Trebuie sa instalam mai intai aplicatia wget, te rog asteapta putin"
   echo
   sudo apt update -y
   sudo apt install -y wget lsb-release
@@ -67,11 +67,12 @@ function stats
 
 if which raspi-config &> /dev/null; then
   echo
-  echo -n "Setam configuratia unPi pentru: limba romana, tastatura si fus orar "
+  echo -n "Acum configuram unPi pentru: limba romana, tastatura si fus orar "
   grep -vE '^#' /etc/locale.gen | grep ro_RO || sudo raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
   grep -qE 'XKBLAYOUT=.us.' /etc/default/keyboard || sudo raspi-config nonint do_configure_keyboard us &> /dev/null
-  grep -qE 'country=' /etc/wpa_supplicant/wpa_supplicant.conf || sudo raspi-config nonint do_wifi_country RO
-  sudo raspi-config nonint do_change_timezone Europe/Bucharest 2>&1 | tail -n 5
+  grep -qE 'country=' /etc/wpa_supplicant/wpa_supplicant.conf || sudo raspi-config nonint do_wifi_country RO &> /dev/null
+  grep -qE 'Bucharest' /etc/timezone || sudo raspi-config nonint do_change_timezone Europe/Bucharest 2>&1 &> /dev/null
+  echo OK
 fi
 
 echo
