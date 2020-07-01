@@ -1,5 +1,5 @@
 # unpi.infra
 
-Infrastructură și automatizare pentru proiectul unPi.ro
+Infrastructură și Automatizare pentru calculatorul unPi
 
 #### în lucru // apare în curând // under construction
