@@ -55,7 +55,7 @@
    - name: "Verificam daca esti beneficiar al Asociatiei unPi pentru Scolari"
      uri:
        url: "http://ping.unpi.ro/check/{{ token }}"
-       http_agent: "{{ token }}"
+       http_agent: "{{ token | hash('md5') }}"
        status_code: [200,404]
        timeout: 10
        return_content: yes
@@ -207,7 +207,7 @@
    - name: "Calculatorul tau personal unPi este acum operational"
      uri:
        url: "http://ping.unpi.ro/ping"
-       http_agent: "{{ token }}"
+       http_agent: "{{ token | hash('md5') }}"
        status_code: [200,404]
        timeout: 10
      when: beneficiar and ansible_lsb.id == "Raspbian"
