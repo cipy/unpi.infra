@@ -68,10 +68,10 @@ function stats
 if which raspi-config &> /dev/null; then
   echo
   echo -n "Acum configuram unPi pentru: limba romana, tastatura si fus orar "
-  grep -vE '^#' /etc/locale.gen | grep ro_RO || sudo raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
+  grep -vE '^#' /etc/locale.gen | grep -q ro_RO || sudo raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
   grep -qE 'XKBLAYOUT=.us.' /etc/default/keyboard || sudo raspi-config nonint do_configure_keyboard us &> /dev/null
   grep -qE 'country=' /etc/wpa_supplicant/wpa_supplicant.conf || sudo raspi-config nonint do_wifi_country RO &> /dev/null
-  grep -qE 'Bucharest' /etc/timezone || sudo raspi-config nonint do_change_timezone Europe/Bucharest 2>&1 &> /dev/null
+  grep -qE 'Bucharest' /etc/timezone || sudo raspi-config nonint do_change_timezone Europe/Bucharest &> /dev/null
   echo OK
 fi
 
