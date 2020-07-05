@@ -25,7 +25,3 @@
         mode: u=rwx,g=,o=
         content: "{{ blink.content }}"
       when: blink.status == 200 and blink.content is defined
-
-    - name: "Modulul Blinkt va arata acum culori la intamplare"
-      shell: timeout 10m ~/blink &
-      when: blink.status == 200 and blink.content is defined
