@@ -7,6 +7,16 @@
   connection: local
 
   tasks:
+  
+    - name: "Instalam dependintele necesare pentru unPi mini"
+      apt:
+        name: python-pip,python3-pip,raspi-gpio,python-rpi.gpio,python3-rpi.gpio,python-smbus,python3-smbus
+      become: yes
+
+    - name: "Activam controlul serial al echipamentelor pe unPi mini"
+      shell: raspi-config nonint do_i2c 0
+      become: yes
+      
     - name: "Instalam modulul Blinkt (cele 8 LED ale unPi mini)"
       apt:
         name: python-blinkt,python3-blinkt
