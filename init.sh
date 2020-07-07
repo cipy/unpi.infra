@@ -5,7 +5,7 @@
 # unPi ® este o marca inregistrata in Romania de Ciprian Manea
 
 ERR_NOOS="Imi pare rau, doar Raspbian/Linux OS este recomandat pentru unPi"
-ERR_INET="Imi pare rau, dar trebuie sa fii online, conectat la Internet!"
+ERR_INET='Imi pare rau, dar trebuie sa fii online, conectat la Internet!'
 
 trap ctrl_c INT
 
