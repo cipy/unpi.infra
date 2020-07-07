@@ -5,7 +5,7 @@
 # unPi ® este o marca inregistrata in Romania de Ciprian Manea
 
 ERR_NOOS="Imi pare rau, doar Raspbian/Linux OS este recomandat pentru unPi"
-ERR_INET='Imi pare rau, dar trebuie sa fii online, conectat la Internet!'
+ERR_INET="Imi pare rau, dar trebuie sa fii online, conectat la Internet!"
 
 trap ctrl_c INT
 
@@ -70,7 +70,7 @@ if which raspi-config &> /dev/null; then
   echo -n "Acum configuram unPi pentru: limba romana, tastatura si fus orar "
   grep -vE '^#' /etc/locale.gen | grep -q ro_RO || sudo raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
   grep -qE 'XKBLAYOUT=.us.' /etc/default/keyboard || sudo raspi-config nonint do_configure_keyboard us &> /dev/null
-  grep -qE 'country=' /etc/wpa_supplicant/wpa_supplicant.conf || sudo raspi-config nonint do_wifi_country RO &> /dev/null
+  sudo grep -qE 'country=' /etc/wpa_supplicant/wpa_supplicant.conf || sudo raspi-config nonint do_wifi_country RO &> /dev/null
   grep -qE 'Bucharest' /etc/timezone || sudo raspi-config nonint do_change_timezone Europe/Bucharest &> /dev/null
   echo OK
 fi
