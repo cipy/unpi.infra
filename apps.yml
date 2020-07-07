@@ -61,9 +61,10 @@
        return_content: yes
      when: beneficiar and ansible_lsb.id == "Raspbian"
      register: check
+     # Raspbian Desktop pe PC/Mac este recunoscut ca 'Debian'
 
    - set_fact: verificat=true
-     when: check.status == 200 and check.content is defined and 'ok' in check.content
+     when: check is not skipped and check.status == 200 and 'ok' in check.content
 
    - name: "Salvez profilul tau de beneficiar unPi"
      set_fact: profile="{{ check.content | from_yaml }}"
@@ -119,6 +120,7 @@
      become: yes
      when: verificat
 
+     # Debian/WSL in Windows nu are inca mediu grafic
    - name: "Instalam mediul educational GCompris pentru copii"
      apt:
        name: gcompris
