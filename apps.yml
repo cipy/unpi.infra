@@ -120,7 +120,7 @@
      become: yes
      when: verificat
 
-     # Debian/WSL in Windows nu are inca mediu grafic
+     # Debian/WSL in Windows nu are inca un mediu grafic
    - name: "Instalam mediul educational GCompris pentru copii"
      apt:
        name: gcompris
@@ -198,7 +198,7 @@
      become: yes
 
    - name: "(pasul urmator va dura mai mult, depinzand de conexiunea ta la Internet)"
-     shell: echo; figlet te rog, asteapta
+     shell: echo; figlet te rog, asteapta; echo
 
    - name: "Instalam cele mai noi aplicatii pentru calculatorul tau personal"
      apt:
