@@ -31,7 +31,7 @@ if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
 
 export DEBIAN_FRONTEND=noninteractive
 
-# este un Debian/Linux OS minim, sau Debian/WSL pe Windows?
+# este un Debian/Linux OS minim, sau Debian/WSL in Windows?
 if ! which wget lsb_release &> /dev/null; then
   echo
   echo "Trebuie sa instalam mai intai aplicatia wget, te rog asteapta putin"
