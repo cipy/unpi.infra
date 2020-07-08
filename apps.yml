@@ -125,7 +125,7 @@
      apt:
        name: gcompris
      become: yes
-     when: "'WINDOWS' not in ansible_env.PATH"
+     when: "'Microsoft' not in ansible_kernel"
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
@@ -177,6 +177,7 @@
        enabled: yes
        name: sysstat
      become: yes
+     when: "'Microsoft' not in ansible_kernel"
 
    - name: "Stergem versiunile vechi (v1, v2) ale programului Scratch"
      apt:
