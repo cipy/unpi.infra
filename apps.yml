@@ -198,7 +198,7 @@
      become: yes
 
    - name: "(pasul urmator va dura mai mult, depinzand de conexiunea ta la Internet)"
-     shell: echo; figlet te rog, asteapta; echo
+     shell: echo; figlet te rog, asteapta
 
    - name: "Instalam cele mai noi aplicatii pentru calculatorul tau personal"
      apt:
