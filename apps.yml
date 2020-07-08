@@ -203,9 +203,15 @@
    - name: "Instalam cele mai noi aplicatii pentru calculatorul tau personal"
      apt:
        upgrade: full
-       cache_valid_time: 900
+       autoclean: yes
+       autoremove: yes
+       cache_valid_time: 1800
      become: yes
 
+   - name: "Eliberam spatiul de disc pe microSD ocupat de aplicatiile vechi"
+     shell: apt clean all
+     become: yes
+     
    - name: "Calculatorul tau personal unPi este acum operational"
      uri:
        url: "http://ping.unpi.ro/ping"
