@@ -1,0 +1,9 @@
+[Unit]
+Description=Verific configuratia unPi (timer)
+
+[Timer]
+OnUnitActiveSec=30min
+OnBootSec=60s
+
+[Install]
+WantedBy=timers.target
