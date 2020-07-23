@@ -2,6 +2,5 @@
 Description=Verific configuratia unPi pentru beneficiari
 
 [Service]
-Restart=always
-RestartSec=30min
+Type=oneshot
 ExecStart=/bin/dash /root/.unpi/boot.sh
