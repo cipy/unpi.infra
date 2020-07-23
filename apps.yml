@@ -104,8 +104,17 @@
 
    - name: "Salvez serviciul administrativ pentru calculatorul unPi"
      get_url:
-       url: https://infra.unpi.ro/files/boot.unit.txt
+       url: https://infra.unpi.ro/files/boot.unit.service
        dest: /etc/systemd/system/unpi.boot.service
+       mode: u=rw,g=r,o=r
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     become: yes
+     when: verificat
+
+   - name: "Salvez timer pentru serviciul administrativ al unPi"
+     get_url:
+       url: https://infra.unpi.ro/files/boot.unit.timer
+       dest: /etc/systemd/system/unpi.boot.timer
        mode: u=rw,g=r,o=r
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      become: yes
@@ -116,7 +125,7 @@
        state: restarted
        daemon_reload: yes
        enabled: yes
-       name: unpi.boot
+       name: unpi.boot.timer
      become: yes
      when: verificat
 
