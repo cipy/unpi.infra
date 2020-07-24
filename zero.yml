@@ -13,8 +13,8 @@
         name: python-pip,python3-pip,raspi-gpio,python-rpi.gpio,python3-rpi.gpio,python-smbus,python3-smbus
       become: yes
 
-   # din pacate Raspberry Pi Zero / unPi mini este prea incet
-   - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
+    # din pacate Raspberry Pi Zero / unPi mini este prea incet
+    - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
      apt:
        name: scratch3,gcompris
        state: absent
