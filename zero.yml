@@ -15,11 +15,11 @@
 
     # din pacate Raspberry Pi Zero / unPi mini este prea incet
     - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
-     apt:
+      apt:
        name: scratch3,gcompris
        state: absent
-     become: yes
-     
+      become: yes
+
     - name: "Activam controlul serial al echipamentelor pe unPi mini"
       shell: raspi-config nonint do_i2c 0
       become: yes
