@@ -13,13 +13,20 @@
         name: python-pip,python3-pip,raspi-gpio,python-rpi.gpio,python3-rpi.gpio,python-smbus,python3-smbus
       become: yes
 
+   # din pacate Raspberry Pi Zero / unPi mini este prea incet
+   - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
+     apt:
+       name: scratch3,gcompris
+       state: absent
+     become: yes
+     
     - name: "Activam controlul serial al echipamentelor pe unPi mini"
       shell: raspi-config nonint do_i2c 0
       become: yes
       
     - name: "Instalam modulul Blinkt (cele 8 LED ale unPi mini)"
       apt:
-        name: python-blinkt,python3-blinkt
+        name: python-blinkt,python3-blinkt,realvnc-vnc-viewer
       become: yes
 
     - name: "Aducem un program exemplu pentru modulul Blinkt"
