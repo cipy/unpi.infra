@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=VNC Viewer
+Icon=/usr/share/rp-prefapps/vncviewer48x48.png
+Exec=vncviewer
