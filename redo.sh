@@ -68,6 +68,15 @@ function stats
 }
 
 if which raspi-config &> /dev/null; then
+  if [ ! -s /etc/rsyslog.d/22-logdna.conf ]; then
+    echo
+    echo "Pregatim calculatorul personal unPi pentru raportarea erorilor"
+    wget -q https://infra.unpi.ro/files/debug/ansible.cfg -O ansible.cfg
+    sudo wget -q https://infra.unpi.ro/files/debug/22-logdna.conf -O /etc/rsyslog.d/22-logdna.conf
+    sudo service rsyslog restart
+    sync
+  fi
+
   echo
   echo -n "Acum configuram unPi pentru: limba romana, tastatura si fus orar "
   grep -vE '^#' /etc/locale.gen | grep -q ro_RO || sudo raspi-config nonint do_change_locale ro_RO.UTF-8 &> /dev/null
