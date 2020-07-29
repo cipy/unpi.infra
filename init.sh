@@ -65,6 +65,7 @@ function stats
   sync
 }
 
+# modelul unPi pe care se ruleaza
 if [ -f /proc/device-tree/model ]; then
   model=$(cat /proc/device-tree/model | tr -d '\0')
   [[ "$model" =~ "Zero" ]] && eMIN=yes
