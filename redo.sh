@@ -67,6 +67,14 @@ function stats
   sync
 }
 
+# modelul unPi pe care se ruleaza
+if [ -f /proc/device-tree/model ]; then
+  model=$(cat /proc/device-tree/model | tr -d '\0')
+  [[ "$model" =~ "Zero" ]] && eMIN=yes
+  [[ "$model" =~ "Pi 3" ]] && eSTD=yes
+  [[ "$model" =~ "Pi 4" ]] && ePRO=yes
+fi
+
 if which raspi-config &> /dev/null; then
   if [ ! -s /etc/rsyslog.d/22-logdna.conf ]; then
     echo
@@ -125,12 +133,13 @@ if [ -s apps.yml ]; then
   undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
   hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
   ansible-playbook -i localhost, apps.yml \
-    -e "esteundar=$undar" -e "hashedcode=$hashed"
+    -e "esteundar=$undar" -e "hashedcode=$hashed" \
+    -e "MIN=$eMIN" -e "STD=$eSTD" -e "PRO=$ePRO"
 fi
 
 if [ -f /proc/device-tree/model ]; then
   # este un Pi Zero WH? adica unPi mini
-  if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero" ]]; then
+  if [ "$eMIN" == "yes" ]]; then
     echo "Acum facem o configurare specifica pentru unPi mini"
     echo
     wget -q https://infra.unpi.ro/zero.yml -O zero.yml
