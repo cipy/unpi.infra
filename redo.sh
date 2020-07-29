@@ -137,16 +137,14 @@ if [ -s apps.yml ]; then
     -e "MIN=$eMIN" -e "STD=$eSTD" -e "PRO=$ePRO"
 fi
 
-if [ -f /proc/device-tree/model ]; then
-  # este un Pi Zero WH? adica unPi mini
-  if [ "$eMIN" == "yes" ]; then
-    echo "Acum facem o configurare specifica pentru unPi mini"
-    echo
-    wget -q https://infra.unpi.ro/zero.yml -O zero.yml
+# este un Pi Zero? adica unPi mini
+if [ "$eMIN" == "yes" ]; then
+  echo "Acum facem o configurare specifica pentru unPi mini"
+  echo
+  wget -q https://infra.unpi.ro/zero.yml -O zero.yml
 
-    export ANSIBLE_STDOUT_CALLBACK=unixy
-    [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
-  fi
+  export ANSIBLE_STDOUT_CALLBACK=unixy
+  [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
 fi
 
 echo
