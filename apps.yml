@@ -54,7 +54,7 @@
    - set_fact: token="{{ hashedcode | password_hash('sha256', 'unPi') | regex_replace('^.*[$]','') | regex_replace('[./]','') }}"
 
    - name: "Detectam tipul si modelul calculatorului tau personal"
-     shell: "[ -f /proc/device-tree/model ] && cat /proc/device-tree/model"
+     shell: "[ -f /proc/device-tree/model ] && cat /proc/device-tree/model || echo none"
      register: idPi
 
    - name: "Detectam tipul sistemului de operare de pe calculator"
