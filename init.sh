@@ -65,14 +65,6 @@ function stats
   sync
 }
 
-# modelul unPi pe care se ruleaza
-if [ -f /proc/device-tree/model ]; then
-  model=$(cat /proc/device-tree/model | tr -d '\0')
-  [[ "$model" =~ "Zero" ]] && eMIN=yes
-  [[ "$model" =~ "Pi 3" ]] && eSTD=yes
-  [[ "$model" =~ "Pi 4" ]] && ePRO=yes
-fi
-
 if which raspi-config &> /dev/null; then
   echo
   echo -n "Acum configuram unPi pentru: limba romana, tastatura si fus orar "
@@ -116,17 +108,18 @@ echo
 wget -q https://infra.unpi.ro/apps.yml -O apps.yml
 
 export ANSIBLE_STDOUT_CALLBACK=unixy
-[ -s apps.yml ] && ansible-playbook -i localhost, apps.yml \
-  -e "MIN=$eMIN" -e "STD=$eSTD" -e "PRO=$ePRO"
+[ -s apps.yml ] && ansible-playbook -i localhost, apps.yml
 
-# este un Pi Zero? adica unPi mini
-if [ "$eMIN" == "yes" ]; then
-  echo "Acum facem o configurare specifica pentru unPi mini"
-  echo
-  wget -q https://infra.unpi.ro/zero.yml -O zero.yml
+if [ -f /proc/device-tree/model ]; then
+  # este un Pi Zero WH? adica unPi mini
+  if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero" ]]; then
+    echo "Acum facem o configurare specifica pentru unPi mini"
+    echo
+    wget -q https://infra.unpi.ro/zero.yml -O zero.yml
 
-  export ANSIBLE_STDOUT_CALLBACK=unixy
-  [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
+    export ANSIBLE_STDOUT_CALLBACK=unixy
+    [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
+  fi
 fi
 
 echo
