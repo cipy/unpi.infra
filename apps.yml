@@ -3,6 +3,7 @@
 # unPi ® este o marca inregistrata in Romania de Ciprian Manea
 ---
 - hosts: localhost
+  gather_facts: no
   connection: local
 
   vars_prompt:
@@ -52,6 +53,14 @@
 
    - set_fact: token="{{ hashedcode | password_hash('sha256', 'unPi') | regex_replace('^.*[$]','') | regex_replace('[./]','') }}"
 
+   - name: "Detectam tipul si modelul calculatorului tau personal"
+     shell: "[ -f /proc/device-tree/model ] && cat /proc/device-tree/model"
+     register: idPi
+
+   - name: "Detectam tipul sistemului de operare de pe calculator"
+     shell: echo; uname -a; lsb_release -a; echo
+     register: idOS
+
    - name: "Verificam daca esti beneficiar al Asociatiei unPi pentru Scolari"
      uri:
        url: "http://ping.unpi.ro/check/{{ token }}"
@@ -59,9 +68,9 @@
        status_code: [200,404]
        timeout: 10
        return_content: yes
-     when: beneficiar and ansible_lsb.id == "Raspbian"
+     when: "beneficiar and 'Raspberry' in idPi.stdout"
      register: check
-     # Raspbian Desktop pe PC/Mac este recunoscut ca 'Debian'
+     # unPi este (doar) un Raspberry Pi
 
    - set_fact: verificat=true
      when: check is not skipped and check.status == 200 and 'ok' in check.content
@@ -129,39 +138,49 @@
      become: yes
      when: verificat
 
-     # Debian/WSL in Windows nu are inca un mediu grafic
+     # Debian/WSL in Windows nu are (inca) un mediu grafic
    - name: "Instalam mediul educational GCompris pentru copii"
      apt:
        name: gcompris
      become: yes
-     when: "'Microsoft' not in ansible_kernel"
+     when: "'Microsoft' not in idOS.stdout"
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
-       name: scratch3,omxplayer
+       name: scratch3
      become: yes
-     when: ansible_lsb.id == "Raspbian"
+     when: "'Zero' not in idPi.stdout and 'Raspberry' in idPi.stdout"
+     # unPi mini / Pi Zero este prea incet pentru asta
+
+   - name: "Instalam un omxplayer pentru audio si video"
+     apt:
+       name: omxplayer
+     become: yes
+     when: "'Raspberry' in idPi.stdout"
 
    - name: "Creez un link pe Desktop pentru imnul unPi"
      get_url:
        url: https://infra.unpi.ro/files/imn.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: ansible_lsb.id == "Raspbian"
+     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout"
+     # unPi mini / Pi Zero este prea incet pentru asta
 
    - name: "Creez un link pe Desktop pentru Google Meet"
      get_url:
        url: https://infra.unpi.ro/files/meet.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: verificat
+     when: "verificat and 'Zero' not in idPi.stdout"
+     # unPi mini / Pi Zero este prea incet pentru asta
 
    - name: "Creez un link pe Desktop pentru cursul de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/scratch.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: ansible_lsb.id == "Raspbian"
+     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout"
+     # unPi mini / Pi Zero este prea incet pentru asta
 
    - name: "Instalam limbajul de programare profesional Golang"
      apt:
@@ -186,21 +205,21 @@
        enabled: yes
        name: sysstat
      become: yes
-     when: "'Microsoft' not in ansible_kernel"
+     when: "'Microsoft' not in idOS.stdout"
 
    - name: "Stergem versiunile vechi (v1, v2) ale programului Scratch"
      apt:
        name: scratch,scratch2,atsar
        state: absent
      become: yes
-     when: beneficiar and ansible_lsb.id == "Raspbian"
+     when: "beneficiar and 'Raspbian' in idOS.stdout"
 
    - name: "Stergem editoarele ce nu vor fi folosite in cursurile unPi"
      apt:
        name: geany*,bluej,greenfoot*,smartsim
        state: absent
      become: yes
-     when: beneficiar and ansible_lsb.id == "Raspbian"
+     when: "beneficiar and 'Raspbian' in idOS.stdout"
 
    - name: "Activez instalarea automata a programelor din sistemul de operare"
      apt:
@@ -223,11 +242,11 @@
      args:
        warn: no
      become: yes
-     
+
    - name: "Calculatorul tau personal unPi este acum operational"
      uri:
        url: "http://ping.unpi.ro/ping"
        http_agent: "{{ token | hash('md5') }}"
        status_code: [200,404]
        timeout: 10
-     when: beneficiar and ansible_lsb.id == "Raspbian"
+     when: "beneficiar and 'Raspbian' in idOS.stdout"
