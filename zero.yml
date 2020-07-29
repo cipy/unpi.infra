@@ -35,30 +35,24 @@
         - ~/Desktop/meet.desktop
         - ~/Desktop/scratch.desktop
 
-    - name: "Instalam dependintele necesare pentru unPi mini"
-      apt:
-        name: python-pip,python3-pip,raspi-gpio,python-rpi.gpio,python3-rpi.gpio,python-smbus,python3-smbus
-      become: yes
-
-    - name: "Activam controlul serial al echipamentelor pe unPi mini"
-      shell: raspi-config nonint do_i2c 0
-      become: yes
-      
-    - name: "Instalam modulul Blinkt (cele 8 LED ale unPi mini)"
-      apt:
-        name: python-blinkt,python3-blinkt,realvnc-vnc-viewer
-      become: yes
-
-    - name: "Aducem un program exemplu pentru modulul Blinkt"
+    - name: "Aducem programul de instalare pentru Blinkt!"
       uri:
-        url: "https://raw.githubusercontent.com/pimoroni/blinkt/master/examples/random_blink_colours.py"
-        status_code: [200,404]
-        timeout: 10
+        url: https://get.pimoroni.com/blinkt
+        timeout: 20
         return_content: yes
-      register: blink
+      register: blinkt
 
     - copy:
-        dest: ~/blink
+        dest: /tmp/blinkt
         mode: u=rwx,g=,o=
-        content: "{{ blink.content }}"
-      when: blink.status == 200 and blink.content is defined
+        content: "{{ blinkt.content }}"
+      when: blinkt.content is defined
+
+    - name: "Configuram unPi mini pentru Pimoroni Blinkt!"
+      shell: /tmp/blinkt -y
+ 
+    - name: "Creez un program exemplu pentru un Blinkt colorat"
+      file:
+        src: ~/Pimoroni/blinkt/examples/random_blink_colours.py
+        dest: ~/blink
+        state: hard
