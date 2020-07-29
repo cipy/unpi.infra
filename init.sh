@@ -65,6 +65,13 @@ function stats
   sync
 }
 
+if [ -f /proc/device-tree/model ]; then
+  model=$(cat /proc/device-tree/model | tr -d '\0')
+  [[ "$model" =~ "Zero" ]] && eMIN=yes
+  [[ "$model" =~ "Pi 3" ]] && eSTD=yes
+  [[ "$model" =~ "Pi 4" ]] && ePRO=yes
+fi
+
 if which raspi-config &> /dev/null; then
   echo
   echo -n "Acum configuram unPi pentru: limba romana, tastatura si fus orar "
@@ -108,11 +115,12 @@ echo
 wget -q https://infra.unpi.ro/apps.yml -O apps.yml
 
 export ANSIBLE_STDOUT_CALLBACK=unixy
-[ -s apps.yml ] && ansible-playbook -i localhost, apps.yml
+[ -s apps.yml ] && ansible-playbook -i localhost, apps.yml \
+  -e "MIN=$eMIN" -e "STD=$eSTD" -e "PRO=$ePRO"
 
 if [ -f /proc/device-tree/model ]; then
   # este un Pi Zero WH? adica unPi mini
-  if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero" ]]; then
+  if [ "$eMIN" == "yes" ]; then
     echo "Acum facem o configurare specifica pentru unPi mini"
     echo
     wget -q https://infra.unpi.ro/zero.yml -O zero.yml
