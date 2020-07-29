@@ -163,8 +163,8 @@
        url: https://infra.unpi.ro/files/imn.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout"
-     # unPi mini / Pi Zero este prea incet pentru asta
+     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout or 'raspberry' in idOS.stdout"
+     # unPi mini / Pi Zero este prea incet pentru asta; dar Raspbian Desktop pentru PC/Mac poate
 
    - name: "Creez un link pe Desktop pentru Google Meet"
      get_url:
@@ -179,8 +179,8 @@
        url: https://infra.unpi.ro/files/scratch.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout"
-     # unPi mini / Pi Zero este prea incet pentru asta
+     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout or 'raspberry' in idOS.stdout"
+     # unPi mini / Pi Zero este prea incet pentru asta; dar Raspbian Desktop pentru PC/Mac poate
 
    - name: "Instalam limbajul de programare profesional Golang"
      apt:
