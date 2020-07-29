@@ -1,3 +1,7 @@
+#!/bin/bash
+
+# be quick
+
 echo
 echo "Acum facem o configurare specifica pentru unPi mini"
 echo
