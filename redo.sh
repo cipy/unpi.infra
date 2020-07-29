@@ -139,7 +139,7 @@ fi
 
 if [ -f /proc/device-tree/model ]; then
   # este un Pi Zero WH? adica unPi mini
-  if [ "$eMIN" == "yes" ]]; then
+  if [ "$eMIN" == "yes" ]; then
     echo "Acum facem o configurare specifica pentru unPi mini"
     echo
     wget -q https://infra.unpi.ro/zero.yml -O zero.yml
