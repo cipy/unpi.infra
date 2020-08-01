@@ -74,7 +74,7 @@ if which raspi-config &> /dev/null; then
     echo "Pregatim calculatorul personal unPi pentru raportarea erorilor"
     wget -q https://infra.unpi.ro/files/debug/ansible.cfg -O ansible.cfg
     sudo wget -q https://infra.unpi.ro/files/debug/22-logdna.conf -O /etc/rsyslog.d/22-logdna.conf
-    sysid=$(sudo cat /root/.unpi/hashedcode 2>/dev/null | tail -c6)
+    sysid=$(sudo cat /root/.unpi/hashedcode 2>/dev/null | tail -c6 | tr -d -c [:alnum:])
     [ -n "$sysid" ] && sudo sed -i -e "s/%HOSTNAME%/$sysid/" /etc/rsyslog.d/22-logdna.conf
     sudo service rsyslog restart
     sync
