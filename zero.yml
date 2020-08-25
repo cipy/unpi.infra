@@ -56,3 +56,4 @@
         src: ~/Pimoroni/blinkt/examples/random_blink_colours.py
         dest: ~/blink
         state: hard
+        force: yes
