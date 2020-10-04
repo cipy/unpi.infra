@@ -65,7 +65,7 @@
      uri:
        url: "http://ping.unpi.ro/check/{{ token }}"
        http_agent: "{{ token | hash('md5') }}"
-       status_code: [200,404]
+       status_code: [200,302,404]
        timeout: 10
        return_content: yes
      when: "beneficiar and 'Raspberry' in idPi.stdout"
@@ -247,6 +247,6 @@
      uri:
        url: "http://ping.unpi.ro/ping"
        http_agent: "{{ token | hash('md5') }}"
-       status_code: [200,404]
+       status_code: [200,302,404]
        timeout: 10
      when: "beneficiar and 'Raspbian' in idOS.stdout"
