@@ -185,7 +185,7 @@
    - name: "Creez un downloader pentru cursul de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/get.scratch.sh
-       dest: ~
+       dest: ~/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      when: beneficiar
 
