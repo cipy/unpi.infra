@@ -182,6 +182,13 @@
      when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout or 'raspberry' in idOS.stdout"
      # unPi mini / Pi Zero este prea incet pentru asta; dar Raspbian Desktop pentru PC/Mac poate
 
+   - name: "Creez un downloader pentru cursul de Scratch"
+     get_url:
+       url: https://infra.unpi.ro/files/get.scratch.sh
+       dest: ~
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     when: beneficiar
+
    - name: "Instalam limbajul de programare profesional Golang"
      apt:
        name: golang
