@@ -143,7 +143,7 @@
      apt:
        name: gcompris
      become: yes
-     when: "'Microsoft' not in idOS.stdout"
+     when: "'Microsoft' not in idOS.stdout and 'Zero' not in idPi.stdout"
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
@@ -152,7 +152,7 @@
      when: "'Zero' not in idPi.stdout and 'Raspberry' in idPi.stdout"
      # unPi mini / Pi Zero este prea incet pentru asta
 
-   - name: "Instalam un omxplayer pentru audio si video"
+   - name: "Instalam un (omx)player pentru continut audio si video"
      apt:
        name: omxplayer
      become: yes
