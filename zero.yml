@@ -47,7 +47,7 @@
       become: yes
 
     - name: "Aducem cursul nostru de Scratch pe unPi mini"
-      shell: bash NOFIG=true ~/get.scratch.sh
+      shell: NOFIG=true bash ~/get.scratch.sh
       args:
         removes: ~/get.scratch.sh
 
