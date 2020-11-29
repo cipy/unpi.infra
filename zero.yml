@@ -66,6 +66,7 @@
 
     - name: "Configuram unPi mini pentru Pimoroni Blinkt!"
       shell: /tmp/blinkt -y
+      when: blinkt.content is defined
  
     - name: "Creez un program exemplu pentru un Blinkt colorat"
       file:
