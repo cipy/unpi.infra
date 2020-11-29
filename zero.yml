@@ -15,14 +15,14 @@
       
     - name: "Pregatesc directorul Desktop pe unPi"
       file:
-       dest: ~/Desktop
-       state: directory
+        dest: ~/Desktop
+        state: directory
 
     - name: "Creez un link pe Desktop pentru VNC Viewer"
       get_url:
-       url: https://infra.unpi.ro/files/vncviewer.desktop
-       dest: ~/Desktop/
-       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+        url: https://infra.unpi.ro/files/vncviewer.desktop
+        dest: ~/Desktop/
+        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
 
     - name: "Stergem link-urile Desktop de pe unPi mini"
       file:
@@ -36,15 +36,20 @@
     # din pacate Raspberry Pi Zero / unPi mini este chiar lent
     - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
       apt:
-       name: scratch3,gcompris
-       state: absent
+        name: scratch3,gcompris
+        state: absent
       become: yes
 
-   # dar Scratch v1 pare sa mearga destul de bine
-   - name: "Instalam Scratch v1 pentru unPi mini"
-     apt:
-       name: scratch
-     become: yes
+    # dar Scratch v1 pare sa mearga destul de bine
+    - name: "Instalam Scratch v1 pentru unPi mini"
+      apt:
+        name: scratch
+      become: yes
+
+    - name: "Aducem cursul nostru de Scratch pe unPi mini"
+      shell: bash ~/get.scratch.sh
+      args:
+        removes: ~/get.scratch.sh
 
     - name: "Aducem programul de instalare pentru Blinkt!"
       uri:
