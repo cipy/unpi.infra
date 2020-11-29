@@ -174,7 +174,7 @@
      when: "verificat and 'Zero' not in idPi.stdout"
      # unPi mini / Pi Zero este prea incet pentru asta
 
-   - name: "Creez un link pe Desktop pentru cursul de Scratch"
+   - name: "Creez un link pe Desktop pentru cursul online de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/scratch.desktop
        dest: ~/Desktop/
