@@ -9,5 +9,5 @@ for mov in aspect control detectare evenimente miscare operatori; do
   wget -nv -c --show-progress http://cache.unpi.ro/cache/scratch/old/$mov.mp4
 done
 
-cd
 [ -z "$NOFIG" ] && figlet gata.
+cd
