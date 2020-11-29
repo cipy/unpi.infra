@@ -1,7 +1,7 @@
 #!/bin/bash
 
-mkdir -p ~/Desktop/Scratch.Video
-cd ~/Desktop/Scratch.Video
+mkdir -p ~/Desktop/"Scratch 3 Curs Video"
+cd ~/Desktop/"Scratch 3 Curs Video"
 
 figlet aduc lectiile de Scratch 3
 for mov in aspect control detectare evenimente miscare operatori; do
