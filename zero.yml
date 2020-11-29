@@ -24,13 +24,6 @@
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
 
-    # din pacate Raspberry Pi Zero / unPi mini este prea incet
-    - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
-      apt:
-       name: scratch3,gcompris
-       state: absent
-      become: yes
-
     - name: "Stergem link-urile Desktop de pe unPi mini"
       file:
         path: "{{ item }}"
@@ -39,6 +32,19 @@
         - ~/Desktop/imn.desktop
         - ~/Desktop/meet.desktop
         - ~/Desktop/scratch.desktop
+
+    # din pacate Raspberry Pi Zero / unPi mini este chiar lent
+    - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
+      apt:
+       name: scratch3,gcompris
+       state: absent
+      become: yes
+
+   # dar Scratch v1 pare sa mearga destul de bine
+   - name: "Instalam Scratch v1 pentru unPi mini"
+     apt:
+       name: scratch
+     become: yes
 
     - name: "Aducem programul de instalare pentru Blinkt!"
       uri:
