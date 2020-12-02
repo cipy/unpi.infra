@@ -46,6 +46,9 @@
         name: scratch
       become: yes
 
+    - name: "(pasul urmator va dura mai mult, depinzand de conexiunea ta la Internet)"
+      shell: echo; figlet te rog, asteapta
+
     - name: "Aducem cursul nostru de Scratch pe unPi mini"
       shell: NOFIG=true bash ~/get.scratch.sh
       args:
