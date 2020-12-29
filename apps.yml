@@ -260,6 +260,7 @@
        warn: no
      become: yes
 
+   # fix.sh o va rula periodic
    - name: "Configurari finale"
      shell: echo; figlet inca putin, ...
 
