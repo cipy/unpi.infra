@@ -23,11 +23,11 @@
   tasks:
 
    # este beneficiar daca a primit unPi in dar
-   - set_fact: beneficiar=true verificat=false
+   - set_fact: beneficiar=true verificat=false raspbian=false
      when: esteundar | upper == "DA" or esteundar | bool
 
    # nu este beneficiar daca nu a primit unPi in dar
-   - set_fact: beneficiar=false verificat=false
+   - set_fact: beneficiar=false verificat=false raspbian=false
      when: esteundar | upper != "DA" and not esteundar | bool
 
    - name: "Pregatesc un director pentru configuratia unPi"
@@ -60,6 +60,9 @@
    - name: "Detectam tipul sistemului de operare de pe calculator"
      shell: echo; uname -a; lsb_release -a; echo
      register: idOS
+
+   - set_fact: raspbian=true
+     when: "beneficiar and 'Raspbian' in idOS.stdout"
 
    - name: "Verificam daca esti beneficiar al Asociatiei unPi pentru Scolari"
      uri:
@@ -226,14 +229,14 @@
        name: scratch2
        state: absent
      become: yes
-     when: "beneficiar and 'Raspbian' in idOS.stdout"
+     when: "raspbian is defined and raspbian"
 
    - name: "Stergem editoarele ce nu vor fi folosite in cursurile unPi"
      apt:
        name: geany*,bluej,greenfoot*,smartsim,atsar
        state: absent
      become: yes
-     when: "beneficiar and 'Raspbian' in idOS.stdout"
+     when: "raspbian is defined and raspbian"
 
    - name: "Activez instalarea automata a programelor din sistemul de operare"
      apt:
@@ -257,10 +260,83 @@
        warn: no
      become: yes
 
+   - name: "Configurari finale"
+     shell: echo; figlet inca putin, ...
+
+   - name: "Instalarea automata va folosi Raspberry Pi Foundation"
+     lineinfile:
+       regexp: "^(.*),label=Debian-Security(.*)"
+       line: '"origin=Raspberry Pi Foundation,codename=${distro_codename},label=Raspberry Pi Foundation"; //,label=Debian-Security'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va folosi Raspbian OS"
+     lineinfile:
+       regexp: '^(.*),label=Debian";(.*)'
+       line: '"origin=Raspbian,codename=${distro_codename},label=Raspbian"; //,label=Debian";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va rula in pasi mici"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::MinimalSteps(.*)"
+       line: 'Unattended-Upgrade::MinimalSteps "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va sterge pachetele nefolosite"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::Remove-Unused-Kernel-Packages(.*)"
+       line: 'Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va sterge dependintele (noi) nefolosite"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::Remove-New-Unused-Dependencies(.*)"
+       line: 'Unattended-Upgrade::Remove-New-Unused-Dependencies "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va sterge dependintele nefolosite"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::Remove-Unused-Dependencies(.*)"
+       line: 'Unattended-Upgrade::Remove-Unused-Dependencies "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va reporni unPi"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::Automatic-Reboot (.*)"
+       line: 'Unattended-Upgrade::Automatic-Reboot "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va reporni unPi la ora 2AM"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::Automatic-Reboot-Time(.*)"
+       line: 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va reporni unPi (fortat)"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::Automatic-Reboot-WithUsers(.*)"
+       line: 'Unattended-Upgrade::Automatic-Reboot-WithUsers "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
+   - name: "Instalarea automata va folosi Syslog"
+     lineinfile:
+       regexp: "^(.*)Unattended-Upgrade::SyslogEnable(.*)"
+       line: 'Unattended-Upgrade::SyslogEnable "true";'
+       path: /etc/apt/apt.conf.d/50unattended-upgrades
+     become: yes
+
    - name: "Calculatorul tau personal unPi este acum operational"
      uri:
        url: "http://ping.unpi.ro/ping"
        http_agent: "{{ token | hash('md5') }}"
        status_code: [200,302,404]
        timeout: 10
-     when: "beneficiar and 'Raspbian' in idOS.stdout"
+     when: "raspbian is defined and raspbian"
