@@ -2,6 +2,8 @@
 
 logger unpi.fixing.bit
 
+logger running on an $(cat /proc/device-tree/model)
+
 # daca este cumva activ
 systemctl disable ssh
 
