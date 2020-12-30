@@ -7,7 +7,7 @@ logger running on an $(cat /proc/device-tree/model)
 # daca este cumva activ
 systemctl disable ssh
 
-if uptime -p | grep -q hours; then
+if uptime -p | grep -qE '(hours|day)'; then
   # asteptam sa treaca macar o ora
   wget -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
   sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
