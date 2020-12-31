@@ -255,7 +255,7 @@
      become: yes
 
    - name: "Eliberam spatiul de disc pe microSD ocupat de aplicatiile vechi"
-     shell: apt clean all
+     shell: apt-get clean all
      args:
        warn: no
      become: yes
@@ -266,8 +266,8 @@
 
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
-       apt purge -y bluealsa
-       apt install -y pulseaudio-module-bluetooth
+       apt-get purge -y bluealsa
+       apt-get install -y pulseaudio-module-bluetooth
      args:
        warn: no
      become: yes
