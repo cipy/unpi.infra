@@ -255,7 +255,7 @@
      become: yes
 
    - name: "Eliberam spatiul de disc pe microSD ocupat de aplicatiile vechi"
-     shell: apt-get clean all
+     shell: apt clean all
      args:
        warn: no
      become: yes
@@ -263,6 +263,14 @@
    # fix.sh o va rula periodic
    - name: "Configurari finale"
      shell: echo; figlet inca putin, ...
+
+   - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
+     shell: |
+       apt purge -y bluealsa
+       apt install -y pulseaudio-module-bluetooth
+     args:
+       warn: no
+     become: yes
 
    - name: "Instalarea automata va folosi Raspberry Pi Foundation"
      lineinfile:
