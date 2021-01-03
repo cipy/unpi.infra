@@ -4,6 +4,8 @@ logger unpi.fixing.bit
 
 logger running on an $(cat /proc/device-tree/model)
 
+rpi-eeprom-update -m /var/tmp/eerun; logger -f /var/tmp/eerun
+
 # daca este cumva activ
 systemctl disable ssh
 
