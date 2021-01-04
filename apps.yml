@@ -267,7 +267,7 @@
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
        apt-get purge -y bluealsa
-       apt-get install -y pulseaudio-module-bluetooth
+       apt-get install -y pulseaudio-module-bluetooth gstreamer1.0-pulseaudio
      args:
        warn: no
      become: yes
