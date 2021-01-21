@@ -4,8 +4,8 @@ logger unpi.fixing.bit
 
 logger running on an $(cat /proc/device-tree/model)
 
-# daca este cumva activ
-systemctl disable ssh
+# daca sshd este cumva activ
+[ ! -f /root/.unpi/help ] && systemctl disable ssh
 
 if uptime -p | grep -qE '(hours|day)'; then
   # asteptam sa treaca macar o ora
