@@ -4,20 +4,22 @@ logger unpi.fixing.bit
 
 logger running on an $(cat /proc/device-tree/model)
 
-# daca sshd este cumva activ
+# daca ssh este cumva activ
 [ ! -f /root/.unpi/help ] && systemctl disable ssh
 
-# temporar
-raspi-config nonint do_change_locale ro_RO.UTF-8
-update-locale LANG=ro_RO.UTF-8 LC_ALL=ro_RO.UTF-8 LANGUAGE=ro_RO.UTF-8
+# configureaza limba romana
+if grep -Ev '^#' /etc/default/locale | grep -qv ro_RO; then
+  raspi-config nonint do_change_locale ro_RO.UTF-8
+  update-locale LANG=ro_RO.UTF-8 LC_ALL=ro_RO.UTF-8 LANGUAGE=ro_RO.UTF-8
+fi
        
 if uptime -p | grep -qE '(hours|day)'; then
-  # asteptam sa treaca macar o ora
+  # asteptam sa treaca macar doua ore de la pornirea unPi
   wget -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
   sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
 fi
 
-# daca este prea tarziu
+# daca ora este prea tarzie
 uptime -p | grep -qE '(up [1-9]+ days|up .. hours)' && shutdown 01:30 "Este timpul sa mergi la somn."
 
 curl -s http://ping.unpi.ro/ping/fix -A "$(cat /root/.unpi/profile.token | md5sum | cut -d' ' -f1)" -o /dev/null
