@@ -7,6 +7,10 @@ logger running on an $(cat /proc/device-tree/model)
 # daca sshd este cumva activ
 [ ! -f /root/.unpi/help ] && systemctl disable ssh
 
+# temporar
+raspi-config nonint do_change_locale ro_RO.UTF-8
+update-locale LANG=ro_RO.UTF-8 LC_ALL=ro_RO.UTF-8 LANGUAGE=ro_RO.UTF-8
+       
 if uptime -p | grep -qE '(hours|day)'; then
   # asteptam sa treaca macar o ora
   wget -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
