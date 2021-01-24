@@ -161,6 +161,11 @@
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
+   - name: "Pregatesc directorul Desktop pe unPi"
+     file:
+       dest: ~/Desktop
+       state: directory
+
    - name: "Creez un link pe Desktop pentru imnul unPi"
      get_url:
        url: https://infra.unpi.ro/files/imn.desktop
