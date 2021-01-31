@@ -269,6 +269,12 @@
    - name: "Configurari finale"
      shell: echo; figlet inca putin, ...
 
+   - name: "Creez un link pe Desktop pentru cursul online de folosire a tastaturii"
+     get_url:
+       url: https://infra.unpi.ro/files/tastatura.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
        apt-get purge -y bluealsa
