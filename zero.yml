@@ -7,12 +7,12 @@
   connection: local
 
   tasks:
-  
+
     - name: "Instalam VNC Viewer pentru studiul la distanta"
       apt:
         name: realvnc-vnc-viewer
       become: yes
-      
+
     - name: "Pregatesc directorul Desktop pe unPi"
       file:
         dest: ~/Desktop
@@ -71,7 +71,7 @@
     - name: "Configuram unPi mini pentru Pimoroni Blinkt!"
       shell: /tmp/blinkt -y
       when: blinkt.content is defined
- 
+
     - name: "Creez un program exemplu pentru un Blinkt colorat"
       file:
         src: ~/Pimoroni/blinkt/examples/random_blink_colours.py
