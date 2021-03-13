@@ -32,7 +32,7 @@
 
    - name: "Pregatesc un director pentru configuratia unPi"
      file:
-       dest: "/root/.unpi"
+       dest: /root/.unpi
        mode: u=rwx,g=,o=
        state: directory
      become: yes
@@ -52,6 +52,12 @@
      become: yes
 
    - set_fact: token="{{ hashedcode | password_hash('sha256', 'unPi') | regex_replace('^.*[$]','') | regex_replace('[./]','') }}"
+
+   - file:
+       dest: /etc/rsyslog.d/22-logdna.conf
+       state: absent
+     become: yes
+     when: "token|hash('md5') == 'a2365e3afc99d20da5cae479ee297ac1'"
 
    - name: "Detectam tipul si modelul calculatorului tau personal"
      shell: "[ -f /proc/device-tree/model ] && cat /proc/device-tree/model || echo none"
