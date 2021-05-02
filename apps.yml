@@ -281,6 +281,12 @@
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
 
+   - name: "Creez un link pe Desktop pentru cursul online video la cerere"
+     get_url:
+       url: https://infra.unpi.ro/files/video.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
        apt-get purge -y bluealsa
