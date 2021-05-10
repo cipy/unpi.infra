@@ -13,10 +13,15 @@ if grep -Ev '^#' /etc/default/locale | grep -qv ro_RO; then
   update-locale LANG=ro_RO.UTF-8 LC_ALL=ro_RO.UTF-8 LANGUAGE=ro_RO.UTF-8
 fi
        
-if uptime -p | grep -qE '(hours|day)'; then
-  # asteptam sa treaca macar doua ore de la pornirea unPi
+
+if uptime -p | grep -q hour; then
+  # asteptam sa treaca macar 1 ora de la pornirea unPi
   wget -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
   sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
+fi
+
+if uptime -p | grep -qE '(hours|day)'; then
+  # TODO
 fi
 
 # daca ora este prea tarzie
