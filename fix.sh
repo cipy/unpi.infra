@@ -20,9 +20,9 @@ if uptime -p | grep -q hour; then
   sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
 fi
 
-if uptime -p | grep -qE '(hours|day)'; then
-  # TODO
-fi
+#if uptime -p | grep -qE '(hours|day)'; then
+### TODO
+#fi
 
 # daca ora este prea tarzie
 uptime -p | grep -qE '(up [1-9]+ days|up .. hours)' && shutdown 01:30 "Este timpul sa mergi la somn."
