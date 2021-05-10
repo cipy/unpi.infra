@@ -292,8 +292,10 @@
        apt-get purge -y bluealsa
        rm -f /etc/apt/sources.list.d/vscode.list
        apt-get install -y pulseaudio-module-bluetooth gstreamer1.0-pulseaudio
+       touch /var/tmp/unpi.bt.fix
      args:
        warn: no
+       creates: /var/tmp/unpi.bt.fix
      become: yes
 
    - name: "Instalarea automata va folosi Raspberry Pi Foundation"
