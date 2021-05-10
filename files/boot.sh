@@ -20,8 +20,10 @@ if [ -f /root/.unpi/profile.dynpin ]; then
   if ! grep -sq "$dns1 $dns2" /etc/resolvconf.conf; then
     sed -E "s/.*name_servers.*/name_servers='$dns1 $dns2'/" -i /etc/resolvconf.conf
     resolvconf -u 2> /dev/null
-    [ -f /etc/network/if-up.d/dynrun.sh ] && /etc/network/if-up.d/dynrun.sh
+    echo -n " dynrun :: "
   fi
+
+  [ -f /etc/network/if-up.d/dynrun.sh ] && /etc/network/if-up.d/dynrun.sh
 else
   echo -n "own DNS :: "
 fi
