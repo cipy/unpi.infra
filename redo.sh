@@ -48,8 +48,8 @@ if ! which wget lsb_release &> /dev/null; then
   echo
   echo "Trebuie sa instalam mai intai aplicatia wget, te rog asteapta putin"
   echo
-  sudo apt update -y
-  sudo apt install -y wget lsb-release
+  sudo apt-get update -y
+  sudo apt-get install -y wget lsb-release
 fi
 
 function stats
@@ -73,7 +73,7 @@ if which raspi-config &> /dev/null; then
     echo
     echo "Pregatim calculatorul personal unPi pentru raportarea erorilor"
     wget -4 -q https://infra.unpi.ro/files/debug/ansible.cfg -O ansible.cfg
-    wget -4 -q https://infra.unpi.ro/files/debug/22-logdna.conf -O- | sudo tee /etc/rsyslog.d/22-logdna.conf
+    wget -4 -q https://infra.unpi.ro/files/debug/22-logdna.conf -O- | sudo tee /etc/rsyslog.d/22-logdna.conf &> /dev/null
     sysid=$(sudo cat /root/.unpi/hashedcode 2>/dev/null | tail -c6 | tr -d -c [:alnum:])
     [ -n "$sysid" ] && sudo sed -i -e "s/%HOSTNAME%/$sysid/" /etc/rsyslog.d/22-logdna.conf
     sudo service rsyslog restart
@@ -93,7 +93,7 @@ fi
 echo
 echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
-sudo apt update -y
+sudo apt-get update -y
 
 py2d="$(dpkg -l | grep python- | grep -E '(dns|scrypt)' | wc -l)"
 py3d="$(dpkg -l | grep python3- | grep -E '(dns|scrypt)' | wc -l)"
@@ -103,7 +103,7 @@ if ! which ansible &> /dev/null || [ "$py2d" -lt 2 -o "$py3d" -lt 2 ]; then
   echo
   echo "Acum instalam ansible (pentru automatizarile urmatoare)"
   echo
-  sudo apt install -y ansible python-dnspython python3-dnspython \
+  sudo apt-get install -y ansible python-dnspython python3-dnspython \
     python-passlib python3-passlib python-scrypt python3-scrypt aptitude
 fi
 
@@ -111,7 +111,7 @@ if ! which atop htop figlet &> /dev/null; then
   echo
   echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
   echo
-  sudo apt install -y atop htop figlet
+  sudo apt-get install -y atop htop figlet
 fi
 
 echo
