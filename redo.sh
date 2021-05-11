@@ -34,7 +34,7 @@ if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
 # rulez scriptul redo.sh corect?
 if [ "$0" != "redo.sh" ]; then
   # forteza un download al ultimei versiuni redo.sh
-  wget -q https://infra.unpi.ro/redo.sh -O redo.sh
+  wget -4 -q https://infra.unpi.ro/redo.sh -O redo.sh
   # sterge download-urile facute manual, daca sunt
   rm -f index.html* redo.sh.*
   # ruleaza acum ultima versiune redo.sh
@@ -72,8 +72,8 @@ if which raspi-config &> /dev/null; then
   if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
     echo
     echo "Pregatim calculatorul personal unPi pentru raportarea erorilor"
-    wget -q https://infra.unpi.ro/files/debug/ansible.cfg -O ansible.cfg
-    sudo wget -q https://infra.unpi.ro/files/debug/22-logdna.conf -O /etc/rsyslog.d/22-logdna.conf
+    wget -4 -q https://infra.unpi.ro/files/debug/ansible.cfg -O ansible.cfg
+    wget -4 -q https://infra.unpi.ro/files/debug/22-logdna.conf -O- | sudo tee /etc/rsyslog.d/22-logdna.conf
     sysid=$(sudo cat /root/.unpi/hashedcode 2>/dev/null | tail -c6 | tr -d -c [:alnum:])
     [ -n "$sysid" ] && sudo sed -i -e "s/%HOSTNAME%/$sysid/" /etc/rsyslog.d/22-logdna.conf
     sudo service rsyslog restart
@@ -120,7 +120,7 @@ stats
 
 echo "Pregatim calculatorul tau personal unPi pentru re.configurare"
 echo
-wget -q https://infra.unpi.ro/apps.yml -O apps.yml
+wget -4 -q https://infra.unpi.ro/apps.yml -O apps.yml
 
 export ANSIBLE_STDOUT_CALLBACK=unixy
 if [ -s apps.yml ]; then
@@ -128,8 +128,7 @@ if [ -s apps.yml ]; then
   # folosim datele deja salvate, daca sunt prezente
   undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
   hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
-  ansible-playbook -i localhost, apps.yml \
-    -e "esteundar=$undar" -e "hashedcode=$hashed"
+  ansible-playbook -i localhost, apps.yml -e "esteundar=$undar" -e "hashedcode=$hashed"
 fi
 
 if [ -f /proc/device-tree/model ]; then
@@ -138,7 +137,7 @@ if [ -f /proc/device-tree/model ]; then
     echo
     echo "Acum facem o configurare specifica pentru unPi mini"
     echo
-    wget -q https://infra.unpi.ro/zero.yml -O zero.yml
+    wget -4 -q https://infra.unpi.ro/zero.yml -O zero.yml
 
     export ANSIBLE_STDOUT_CALLBACK=unixy
     [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
