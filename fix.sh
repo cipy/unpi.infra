@@ -1,11 +1,14 @@
 #!/bin/dash
 
-logger unpi.fixing.bit
+logger unpi fixing time
 
 logger running on an $(cat /proc/device-tree/model)
 
 # daca ssh este cumva activ
 [ ! -f /root/.unpi/help ] && systemctl disable ssh
+
+# la chindii nu incarca sistemul cu alte operatii
+[ "$(date +%H)" -ge 17 -a "$(date +%H)" -lt 20 ] && exit
 
 # configureaza limba romana
 if grep -Ev '^#' /etc/default/locale | grep -qv ro_RO; then
