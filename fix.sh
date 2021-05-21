@@ -28,6 +28,6 @@ fi
 #fi
 
 # daca ora este prea tarzie
-uptime -p | grep -qE '(up [1-9]+ days|up .. hours)' && shutdown 01:30 "Este timpul sa mergi la somn."
+uptime -p | grep -qE '(week|day|up .. hours)' && shutdown 01:30 "Este timpul sa mergi la somn."
 
 curl -4 -s http://ping.unpi.ro/ping/fix -A "$(cat /root/.unpi/profile.token | md5sum | cut -d' ' -f1)" -o /dev/null
