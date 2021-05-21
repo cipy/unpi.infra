@@ -298,6 +298,15 @@
        creates: /var/tmp/unpi.bt.fix
      become: yes
 
+   - name: "Pregateste instalarea unui nou firmware pentru calculatorul unPi"
+     shell: |
+       rpi-eeprom-update -a
+       touch /var/tmp/unpi.fw.fix
+     args:
+       warn: no
+       creates: /var/tmp/unpi.fw.fix
+     become: yes
+
    - name: "Instalarea automata va folosi Raspberry Pi Foundation"
      lineinfile:
        regexp: "^(.*),label=Debian-Security(.*)"
