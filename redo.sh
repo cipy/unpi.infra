@@ -72,10 +72,12 @@ if which raspi-config &> /dev/null; then
   if which vcgencmd &> /dev/null && [ -f /proc/device-tree/model ]; then
     echo
     echo "Pregatim calculatorul personal unPi pentru raportarea erorilor"
-    wget -4 -q https://infra.unpi.ro/files/debug/ansible.cfg -O ansible.cfg
+    wget -4 -q https://infra.unpi.ro/files/debug/ansible.cfg -O- | sudo tee ansible.cfg &> /dev/null
     wget -4 -q https://infra.unpi.ro/files/debug/22-logdna.conf -O- | sudo tee /etc/rsyslog.d/22-logdna.conf &> /dev/null
     sysid=$(sudo cat /root/.unpi/hashedcode 2>/dev/null | tail -c6 | tr -d -c [:alnum:])
     [ -n "$sysid" ] && sudo sed -i -e "s/%HOSTNAME%/$sysid/" /etc/rsyslog.d/22-logdna.conf
+    sysdna=$(sudo cat /root/.unpi/profile.logdna 2>/dev/null)
+    [ -n "$sysdna" ] && sudo sed -i -e "s/1d3573d6a76175515af60a4419b1690d/$sysdna/" /etc/rsyslog.d/22-logdna.conf
     sudo service rsyslog restart
     sync
   fi
