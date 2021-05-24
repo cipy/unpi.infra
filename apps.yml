@@ -170,7 +170,7 @@
 
    - name: "Instalam un (omx)player pentru continut audio si video"
      apt:
-       name: omxplayer
+       name: omxplayer,pychess
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
