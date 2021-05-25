@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
 Name=unPi Curs Video
-Icon=vlc
-Exec=vlc rtmp://video.unpi.ro/hls/curs
+Icon=pychess
+Exec=omxplayer -live rtmp://video.unpi.ro/hls/curs
