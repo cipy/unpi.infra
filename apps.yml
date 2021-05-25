@@ -109,7 +109,7 @@
      become: yes
      when: verificat and profile.logdna is defined
 
-  - name: "Activez detectarea dinamica a conexiunii la Internet"
+   - name: "Activez detectarea dinamica a conexiunii la Internet"
      get_url:
        url: https://infra.unpi.ro/files/dynrun.sh
        dest: /etc/network/if-up.d/dynrun.sh
