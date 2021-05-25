@@ -19,12 +19,15 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
   if uptime -p | grep -q hour; then
     # asteptam sa treaca macar 1 ora de la pornirea unPi
     wget -4 -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
-    sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
+    sudo -u pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
     sync
   fi
 
   #if uptime -p | grep -qE '(hours|day)'; then
   ### TODO
+  #undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
+  #hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
+  #su pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
   #fi
 
   # daca ora este prea tarzie
