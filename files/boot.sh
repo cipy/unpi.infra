@@ -3,8 +3,10 @@
 echo -n "boot.unit unPi admin run :: "
 
 if ! ping -qi 0.2 -c 3 1.1 -W 3 > /dev/null; then
-  echo no Internet
-  exit 0
+  if ! ping -qi 0.2 -c 3 8.8.8.8 -W 3 > /dev/null; then
+    echo no Internet
+    exit 0
+  fi
 fi
 
 mkdir -p /root/.unpi/
@@ -15,7 +17,7 @@ if [ -f /root/.unpi/profile.dynpin ]; then
   dns1=$(host dns1.unpi.ro | cut -d' ' -f4)
   dns2=$(host dns2.unpi.ro | cut -d' ' -f4)
 
-  [ -z "$dns1" -a -z "$dns2" ] && echo "DNS failure" && exit 0
+  [ -z "$dns1$dns2" ] && echo "DNS failure" && exit 0
 
   if ! grep -sq "$dns1 $dns2" /etc/resolvconf.conf; then
     sed -E "s/.*name_servers.*/name_servers='$dns1 $dns2'/" -i /etc/resolvconf.conf
