@@ -26,7 +26,7 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
   if uptime -p | grep -qE '(hours|day)'; then
     # dupa 2 ore uptime incercam un full update
     wget -4 -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
-    DISPLAY=:0 python3 /var/run/warn.py &>/dev/null &
+    sudo -u pi DISPLAY=:0 python3 /var/run/warn.py &
     lastpid=$!
     undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
     hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
