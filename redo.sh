@@ -41,6 +41,7 @@ if [ "$0" != "redo.sh" ]; then
   exec bash redo.sh
 fi
 
+touch /tmp/run.init.sh
 export DEBIAN_FRONTEND=noninteractive
 
 # este un Debian/Linux OS minim, sau Debian/WSL in Windows?
@@ -148,4 +149,5 @@ fi
 
 echo
 figlet spor la studiu
+rm -f /tmp/run.init.sh
 stats
