@@ -29,6 +29,7 @@ echo
 echo "Verific conexiunea ta la Internet"
 if ! ping -i 0.2 -c 3 1.1 -W 3 &> /dev/null; then echo $ERR_INET; exit 2; fi
 
+touch /tmp/run.init.sh
 export DEBIAN_FRONTEND=noninteractive
 
 # este un Debian/Linux OS minim, sau Debian/WSL in Windows?
@@ -126,4 +127,5 @@ fi
 
 echo
 figlet spor la studiu
+rm -f /tmp/run.init.sh
 stats
