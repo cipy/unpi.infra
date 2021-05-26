@@ -23,12 +23,16 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
     sync
   fi
 
-  #if uptime -p | grep -qE '(hours|day)'; then
-  ### TODO
-  #undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
-  #hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
-  #su pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
-  #fi
+  if uptime -p | grep -qE '(hours|day)'; then
+    # dupa 2 ore uptime incercam un full update
+    wget -4 -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
+    DISPLAY=:0 python3 /var/run/warn.py &>/dev/null &
+    lastpid=$!
+    undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
+    hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
+    su pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
+    kill $lastpid
+  fi
 
   # daca ora este prea tarzie
   uptime -p | grep -qE '(week|day|up .. hours)' && shutdown 01:30 "Este timpul sa mergi la somn."
