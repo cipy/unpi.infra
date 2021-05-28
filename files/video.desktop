@@ -2,4 +2,4 @@
 Type=Application
 Name=unPi Plus Curs Video
 Icon=pychess
-Exec=omxplayer -live rtmp://video.unpi.ro/hls/curs
+Exec=vlc rtmp://video.unpi.ro/hls/curs
