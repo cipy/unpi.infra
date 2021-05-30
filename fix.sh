@@ -26,14 +26,17 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
     fi
 
     if uptime -p | grep -qE '(hours|day)'; then
-      # dupa 2 ore uptime incercam un full update
-      wget -4 -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
-      sudo -u pi DISPLAY=:0 python3 /var/run/warn.py &
-      lastpid=$!
-      undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
-      hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
-      su pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
-      kill $lastpid
+    # dupa 2 ore uptime incercam un full update
+      if [ ! -f /tmp/ran.fix.sh ]; then
+        wget -4 -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
+        sudo -u pi DISPLAY=:0 python3 /var/run/warn.py &
+        lastpid=$!
+        undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
+        hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
+        su pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
+        kill $lastpid
+        touch /tmp/ran.fix.sh
+      fi
     fi
   fi
 fi
