@@ -34,8 +34,9 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
         undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
         hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
         su -l pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
-        kill $lastpid
         touch /tmp/ran.fix.sh
+        kill $lastpid
+        sync
       fi
     fi
   fi
