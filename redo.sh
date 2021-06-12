@@ -79,6 +79,7 @@ if which raspi-config &> /dev/null; then
     [ -n "$sysid" ] && sudo sed -i -e "s/%HOSTNAME%/$sysid/" /etc/rsyslog.d/22-logdna.conf
     sysdna=$(sudo cat /root/.unpi/profile.logdna 2>/dev/null)
     [ -n "$sysdna" ] && sudo sed -i -e "s/1d3573d6a76175515af60a4419b1690d/$sysdna/" /etc/rsyslog.d/22-logdna.conf
+    sudo mkdir -p /root/.unpi/debug
     sudo service rsyslog restart
     sync
   fi
