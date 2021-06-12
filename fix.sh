@@ -18,6 +18,16 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
       update-locale LANG=ro_RO.UTF-8 LC_ALL=ro_RO.UTF-8 LANGUAGE=ro_RO.UTF-8
     fi
 
+    # pregateste debug daca e necesar
+    if [ -d /root/.unpi/debug ]; then
+      sysdna=$(cat /root/.unpi/profile.logdna 2>/dev/null)
+      sysid=$(cat /root/.unpi/hashedcode 2>/dev/null | tail -c6 | tr -d -c [:alnum:])
+      [ -n "$sysid" ] && sed -i -e "s/%HOSTNAME%/$sysid/" /etc/rsyslog.d/22-logdna.conf
+      [ -n "$sysdna" ] && sed -i -e "s/1d3573d6a76175515af60a4419b1690d/$sysdna/" /etc/rsyslog.d/22-logdna.conf
+      [ -n "$sysid$sysdna" ] && service rsyslog force-reload
+      sync
+    fi
+
     if uptime -p | grep -q hour; then
       # asteptam sa treaca macar 1 ora de la pornirea unPi
       wget -4 -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
