@@ -170,7 +170,7 @@
 
    - name: "Instalam un (omx)player pentru continut audio si video"
      apt:
-       name: omxplayer,pychess,python3-guizero,python3-guizero-doc
+       name: omxplayer,pychess,python3-guizero*,speedtest-cli
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
