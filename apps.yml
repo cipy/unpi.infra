@@ -176,18 +176,14 @@
 
    - name: "Pregatesc directorul Desktop pe unPi"
      file:
-       dest: "{{ item }}"
+       dest: ~/Desktop
        state: directory
-     loop:
-       - ~/Desktop
-       - ~/.config/pcmanfm/LXDE-pi
 
    - name: "Activez fundalul unPi pentru Desktop"
-     lineinfile:
-       regexp: "wallpaper=(.*)/temple.jpg(.*)"
-       line: 'wallpaper=/usr/share/rpd-wallpaper/road.jpg'
-       path: ~/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
-       create: yes
+     shell: DISPLAY=:0 pcmanfm --set-wallpaper /usr/share/rpd-wallpaper/road.jpg
+     args:
+       warn: no
+       creates: ~/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
      when: verificat
 
    - name: "Creez un link pe Desktop pentru imnul unPi"
