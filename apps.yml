@@ -180,7 +180,7 @@
        state: directory
 
    - name: "Activez fundalul unPi pentru Desktop"
-     shell: DISPLAY=:0 pcmanfm --set-wallpaper /usr/share/rpd-wallpaper/road.jpg &> /dev/null
+     shell: DISPLAY=:0 pcmanfm --set-wallpaper /usr/share/rpd-wallpaper/road.jpg 2> /dev/null
      args:
        warn: no
        creates: ~/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
