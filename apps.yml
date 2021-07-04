@@ -174,10 +174,25 @@
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
+   - name: "Activez fundalul unPi pentru Desktop"
+     shell: sed -ie 's/temple.jpg/road.jpg/' .config/pcmanfm/LXDE-pi/desktop-items-0.conf &> /dev/null || echo
+     when: verificat
+
    - name: "Pregatesc directorul Desktop pe unPi"
      file:
-       dest: ~/Desktop
+       dest: {{ item }}
        state: directory
+     loop:
+       - ~/Desktop
+       - ~/.config/pcmanfm/LXDE-pi
+
+   - name: "Activez fundalul unPi pentru Desktop"
+     lineinfile:
+       regexp: "wallpaper=(.*)/temple.jpg(.*)"
+       line: 'wallpaper=/usr/share/rpd-wallpaper/road.jpg'
+       path: ~/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
+       create: yes
+     when: verificat
 
    - name: "Creez un link pe Desktop pentru imnul unPi"
      get_url:
