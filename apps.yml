@@ -174,10 +174,6 @@
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
-   - name: "Activez fundalul unPi pentru Desktop"
-     shell: sed -ie 's/temple.jpg/road.jpg/' .config/pcmanfm/LXDE-pi/desktop-items-0.conf &> /dev/null || echo
-     when: verificat
-
    - name: "Pregatesc directorul Desktop pe unPi"
      file:
        dest: {{ item }}
