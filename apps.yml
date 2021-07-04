@@ -176,7 +176,7 @@
 
    - name: "Pregatesc directorul Desktop pe unPi"
      file:
-       dest: {{ item }}
+       dest: "{{ item }}"
        state: directory
      loop:
        - ~/Desktop
