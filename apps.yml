@@ -285,6 +285,19 @@
        warn: no
      become: yes
 
+   - name: "Activez libraria electronica Raspberry Pi sus pe bara de meniu"
+     replace:
+       path: ~/.config/lxpanel/LXDE-pi/panels/panel
+       after: type=launchbar
+       regexp: '^\s+Button\s+{\s+id=pcmanfm.desktop\s+}$'
+       replace: |-
+         Button {
+           id=pcmanfm.desktop
+         }
+         Button {
+           id=rp-bookshelf.desktop
+         }
+
    # fix.sh va rula periodic de aici
    - name: "Configurari finale"
      shell: echo; figlet inca putin, ...
