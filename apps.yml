@@ -285,6 +285,7 @@
        warn: no
      become: yes
 
+# TODO: panels/panel not present at boot, find a way to create it before edit
 #   - name: "Activez libraria electronica Raspberry Pi sus pe bara de meniu"
 #     replace:
 #       path: ~/.config/lxpanel/LXDE-pi/panels/panel
