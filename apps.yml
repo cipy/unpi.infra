@@ -210,6 +210,13 @@
      when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout or ' raspberry ' in idOS.stdout"
      # unPi mini / Pi Zero este prea incet pentru asta; dar Raspbian Desktop ^ ^ pentru PC/Mac poate
 
+   - name: "Creez un link pe Desktop pentru cursurile video unPi plus"
+     get_url:
+       url: https://infra.unpi.ro/files/video.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     when: verificat
+
    - name: "Creez un downloader pentru cursul mai vechi de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/get.scratch.sh
@@ -312,12 +319,6 @@
    - name: "Creez un link pe Desktop pentru cursul online de folosire a tastaturii"
      get_url:
        url: https://infra.unpi.ro/files/tastatura.desktop
-       dest: ~/Desktop/
-       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-
-   - name: "Creez un link pe Desktop pentru cursul online video la cerere"
-     get_url:
-       url: https://infra.unpi.ro/files/video.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
 
