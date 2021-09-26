@@ -168,9 +168,16 @@
      when: "'Zero' not in idPi.stdout and 'Raspberry' in idPi.stdout"
      # unPi mini / Pi Zero este prea incet pentru asta
 
+   - name: "Instalam un video player accelerat pentru unPi"
+     apt:
+       name: omxplayer
+     become: yes
+     when: "raspbian is defined and raspbian"
+     # versiunea RPi 64bit nu are inca suport complet in "Raspbian OS"
+
    - name: "Instalam programe utilitare pentru continut audio, video, divers"
      apt:
-       name: omxplayer,vlc,pychess,python3-guizero*,speedtest-cli,sense-emu-tools
+       name: vlc,pychess,python3-guizero*,speedtest-cli,sense-emu-tools
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
