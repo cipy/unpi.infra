@@ -326,7 +326,7 @@
 
    - name: "Instalam Emby Theater"
      apt:
-       name: https://github.com/MediaBrowser/emby-theater-electron/releases/download/3.0.15/emby-theater-deb_3.0.15_armhf.deb
+       path: https://github.com/MediaBrowser/emby-theater-electron/releases/download/3.0.15/emby-theater-deb_3.0.15_armhf.deb
      become: yes
      when: verificat
 
