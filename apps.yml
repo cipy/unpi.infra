@@ -319,6 +319,17 @@
            id=rp-bookshelf.desktop
          }
 
+   - name: "Instalam dependinte aditionale pentru media players"
+     apt:
+       name: cec-utils,libasound2,libatomic1,libc6,libegl1,libgcc1,libpulse0,libstdc++6
+     become: yes
+
+   - name: "Instalam Emby Theater"
+     apt:
+       name: https://github.com/MediaBrowser/emby-theater-electron/releases/download/3.0.15/emby-theater-deb_3.0.15_armhf.deb
+     become: yes
+     when: verificat
+
    # fix.sh va rula periodic de aici
    - name: "Configurari finale"
      shell: echo; figlet inca putin, ...
