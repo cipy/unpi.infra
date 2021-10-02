@@ -30,7 +30,7 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
 
     if uptime -p | grep -q hour; then
       # asteptam sa treaca macar 1 ora de la pornirea unPi
-      wget -4 -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
+      wget -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
       sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
       sync
     fi
@@ -38,7 +38,7 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
     if uptime -p | grep -qE '(hours|day)'; then
     # dupa 2 ore uptime incercam un full update
       if [ ! -f /tmp/ran.fix.sh ]; then
-        wget -4 -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
+        wget -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
         sudo -u pi DISPLAY=:0 python3 /var/run/warn.py &
         lastpid=$!
         undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
@@ -55,4 +55,4 @@ fi
 # daca ora este prea tarzie
 uptime -p | grep -qE '(week|day|up .. hours)' && shutdown 00:55 "Este timpul sa mergi la somn."
 
-curl -4 -s http://ping.unpi.ro/ping/fix -A "$(cat /root/.unpi/profile.token | md5sum | cut -d' ' -f1)" -o /dev/null
+curl -s http://ping.unpi.ro/ping/fix -A "$(cat /root/.unpi/profile.token | md5sum | cut -d' ' -f1)" -o /dev/null
