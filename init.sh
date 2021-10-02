@@ -44,7 +44,7 @@ fi
 # rulez scriptul init.sh corect?
 if [ "$0" != "init.sh" ]; then
   # forteza un download al ultimei versiuni init.sh
-  wget -4 -q https://infra.unpi.ro/init.sh -O init.sh
+  wget -q https://infra.unpi.ro/init.sh -O init.sh
   # sterge download-urile facute manual, daca sunt
   rm -f index.html* init.sh.*
   # ruleaza acum ultima versiune init.sh
@@ -107,7 +107,7 @@ stats
 
 echo "Pregatim calculatorul tau personal unPi pentru configurare"
 echo
-wget -4 -q https://infra.unpi.ro/apps.yml -O apps.yml
+wget -q https://infra.unpi.ro/apps.yml -O apps.yml
 
 export ANSIBLE_STDOUT_CALLBACK=unixy
 [ -s apps.yml ] && ansible-playbook -i localhost, apps.yml
@@ -118,7 +118,7 @@ if [ -f /proc/device-tree/model ]; then
     echo
     echo "Acum facem o configurare specifica pentru unPi mini"
     echo
-    wget -4 -q https://infra.unpi.ro/zero.yml -O zero.yml
+    wget -q https://infra.unpi.ro/zero.yml -O zero.yml
 
     export ANSIBLE_STDOUT_CALLBACK=unixy
     [ -s zero.yml ] && ansible-playbook -i localhost, zero.yml
