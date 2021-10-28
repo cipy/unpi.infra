@@ -299,6 +299,11 @@
        warn: no
      become: yes
 
+   - name: "Incercam un upgrade al sistemului de operare (daca este cazul)"
+     apt:
+       upgrade: dist
+     become: yes
+
    - stat:
        path: ~/.config/lxpanel/LXDE-pi/panels/panel
        get_checksum: no
