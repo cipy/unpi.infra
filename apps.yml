@@ -326,7 +326,12 @@
 
    - name: "Instalam dependinte aditionale pentru media players"
      apt:
-       name: cec-utils,libasound2,libatomic1,libc6,libegl1,libgcc1,libpulse0,libstdc++6
+       name: cec-utils,libatomic1,libc6,libegl1,libgcc1,libpulse0,libstdc++6,libasound2,libasound2-dev
+     become: yes
+
+   - name: "Instalam dependinte X11 pentru Golang devs"
+     apt:
+       name: libglfw3,libglfw3-dev,libegl1,libxcursor-dev,libxinerama-dev,libxi-dev,libxxf86vm1,libxxf86vm-dev
      become: yes
 
    - name: "Instalam Emby Theater"
