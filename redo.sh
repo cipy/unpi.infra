@@ -99,17 +99,17 @@ echo "Pregatim sistemul de operare pentru a instala programe noi"
 echo
 sudo apt-get update -y
 
-py2d="$(dpkg -l | grep python- | grep -E '(dns|scrypt)' | wc -l)"
-py3d="$(dpkg -l | grep python3- | grep -E '(dns|scrypt)' | wc -l)"
-
-# daca lipsesc oricare din dependinte, instaleaza-le pe toate
-if ! which ansible &> /dev/null || [ "$py2d" -lt 2 -o "$py3d" -lt 2 ]; then
+if ! which ansible &> /dev/null; then
   echo
   echo "Acum instalam ansible (pentru automatizarile urmatoare)"
   echo
-  sudo apt-get install -y ansible python-dnspython python3-dnspython \
-    python-passlib python3-passlib python-scrypt python3-scrypt aptitude
+  sudo apt-get install -y ansible
 fi
+
+pyver=$(python -V 2>/dev/null | cut -d' ' -f2 | cut -d'.' -f1)
+pyver=${pyver=2}; if [ "$pyver" -lt 3 ]; then pyver=""; fi
+
+sudo apt-get install -y python$pyver-dnspython python$pyver-passlib python$pyver-scrypt aptitude
 
 if ! which atop htop figlet &> /dev/null; then
   echo
