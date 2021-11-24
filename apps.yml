@@ -175,7 +175,7 @@
      when: "raspbian is defined and raspbian"
      # versiunea RPi 64bit nu are inca suport complet in "Raspbian OS"
 
-   - name: "Instalam programe utilitare pentru continut audio, video, divers"
+   - name: "Instalam programe utilitare pentru continut audio, video, drivers"
      apt:
        name: vlc,pychess,python3-guizero*,speedtest-cli,sense-emu-tools
      become: yes
