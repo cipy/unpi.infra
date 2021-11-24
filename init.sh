@@ -86,12 +86,14 @@ if ! which ansible &> /dev/null; then
   echo
   echo "Acum instalam ansible (pentru automatizarile urmatoare)"
   echo
-  sudo apt install -y ansible aptitude
-
-  pyver=$(python -V 2>/dev/null | cut -d' ' -f2 | cut -d'.' -f1)
-  pyver=${pyver=2}; if [ "$pyver" -lt 3 ]; then pyver=""; fi
-  sudo apt install -y python$pyver-dnspython python$pyver-passlib python$pyver-scrypt
+  sudo apt install -y ansible
 fi
+
+pyver=$(python -V 2>/dev/null | cut -d' ' -f2 | cut -d'.' -f1)
+pyver=${pyver=2}; if [ "$pyver" -lt 3 ]; then pyver=""; fi
+# dependinte aditionale pentru ansible, in functie de versionea python existenta in Raspbian
+sudo apt install -y python$pyver-dnspython python$pyver-passlib python$pyver-scrypt aptitude
+
 if ! which atop htop figlet &> /dev/null; then
   echo
   echo "Acum instalam cateva programe utilitare (evaluarea performantei)"
