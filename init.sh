@@ -89,7 +89,7 @@ if ! which ansible &> /dev/null; then
   sudo apt install -y ansible
 fi
 
-# python poate fi python2 sau python3 in ultimul Raspbian OS, instalat mai sus de ansible
+# python poate fi python2 sau python3 in ultimul Raspbian OS, instalat deja de ansible
 pyver=$(python -V 2>&1 | cut -d' ' -f2 | cut -d'.' -f1); test "$pyver" -lt 3 && pyver=""
 # dependinte aditionale pentru ansible, in functie de versiunea python existenta in Raspbian
 sudo apt install -y python$pyver-dnspython python$pyver-passlib python$pyver-scrypt aptitude
