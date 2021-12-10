@@ -352,9 +352,9 @@
 
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
-       apt-get purge -y bluealsa
+       apt-get purge -y bluealsa -q
        rm -f /etc/apt/sources.list.d/vscode.list
-       apt-get install -y pulseaudio-module-bluetooth gstreamer1.0-pulseaudio
+       apt-get install -y pulseaudio-module-bluetooth gstreamer1.0-pulseaudio -q
        touch /var/tmp/unpi.bt.fix
      args:
        warn: no
