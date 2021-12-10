@@ -32,6 +32,7 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
       # asteptam sa treaca macar 1 ora de la pornirea unPi
       wget -q https://infra.unpi.ro/apps.yml -O /var/run/apps.yml; chmod a+r /var/run/apps.yml; sync
       sudo -iu pi ansible-playbook -i localhost, /var/run/apps.yml --start-at-task="Configurari finale" -e esteundar= -e hashedcode=
+      DEBIAN_FRONTEND=noninteractive apt-get update --allow-releaseinfo-change -q
       sync
     fi
 
