@@ -4,6 +4,9 @@ logger unpi fixing time
 
 logger running on an $(cat /proc/device-tree/model)
 
+# uneori e bine sa resetam browserul
+rm -rf /home/pi/.config/chromium/Default
+
 # daca ssh este cumva activ
 [ ! -f /root/.unpi/help ] && systemctl disable ssh
 
