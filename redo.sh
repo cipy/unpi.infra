@@ -106,10 +106,12 @@ if ! which ansible &> /dev/null; then
   sudo apt-get install -y ansible
 fi
 
-# python poate fi python2 sau python3 in ultimul Raspbian OS, instalat deja de ansible
-pyver=$(python -V 2>&1 | cut -d' ' -f2 | cut -d'.' -f1); test "$pyver" -lt 3 && pyver=""
-# dependinte aditionale pentru ansible, in functie de versiunea python existenta in Raspbian OS
-sudo apt-get install -y python$pyver-dnspython python$pyver-passlib python$pyver-scrypt aptitude
+if [[ "$(lsb_release -c)" =~ "buster" ]]; then
+  # Debian/Buster este sigurul care mai foloseste py2 & py3 cu ansible
+  sudo apt-get install -y python-dnspython python-passlib python-scrypt 
+fi
+# dependinte aditionale pentru noua versiune ansible
+sudo apt-get install -y python3-dnspython python3-passlib python3-scrypt aptitude
 
 if ! which atop htop figlet &> /dev/null; then
   echo
