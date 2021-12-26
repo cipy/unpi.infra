@@ -90,8 +90,8 @@ if ! which ansible &> /dev/null; then
 fi
 
 if [[ "$(lsb_release -c)" =~ "buster" ]]; then
-  # Debian/Buster este sigurul care mai foloseste py2 & py3 cu ansible
-  sudo apt install -y python2-dnspython python2-passlib python2-scrypt 
+  # Debian/Buster este sigurul ce mai foloseste py2 & py3 cu ansible
+  sudo apt install -y python-dnspython python-passlib python-scrypt 
 fi
 # dependinte aditionale pentru noua versiune ansible
 sudo apt install -y python3-dnspython python3-passlib python3-scrypt aptitude
