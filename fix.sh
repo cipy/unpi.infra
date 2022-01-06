@@ -55,7 +55,7 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
     fi
     
     wget -c https://rpf.io/fl-guis-emojis -O /var/tmp/emojis.zip
-    unzip -n /var/tmp/emojis.zipemojis.zip -d /var/tmp/
+    unzip -n /var/tmp/emojis.zip -d /var/tmp/
   fi
 fi
 
