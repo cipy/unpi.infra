@@ -70,6 +70,9 @@
    - set_fact: raspbian=true
      when: "beneficiar and 'Raspbian' in idOS.stdout"
 
+   - set_fact: mini=true
+     when: "raspbian and 'Zero 2' in idPi.stdout"
+
    - name: "Verificam daca esti beneficiar al Asociatiei unPi pentru Scolari"
      uri:
        url: "http://ping.unpi.ro/check/{{ token }}"
@@ -159,14 +162,14 @@
      apt:
        name: gcompris
      become: yes
-     when: "'Microsoft' not in idOS.stdout and 'Zero' not in idPi.stdout"
+     when: "'Microsoft' not in idOS.stdout"
 
    - name: "Instalam limbajul de programare vizual Scratch v3"
      apt:
        name: scratch3
      become: yes
-     when: "'Zero' not in idPi.stdout and 'Raspberry' in idPi.stdout"
-     # unPi mini / Pi Zero este prea incet pentru asta
+     when: "'Raspberry' in idPi.stdout"
+     # unPi mini / RPi Zero 2 este rapid
 
    - name: "Instalam un video player accelerat pentru unPi"
      apt:
@@ -175,7 +178,7 @@
      when: "raspbian is defined and raspbian"
      # versiunea RPi 64bit nu are inca suport complet in "Raspbian OS"
 
-   - name: "Instalam programe utilitare pentru continut audio, video, drivers"
+   - name: "Instalam programe utilitare pentru audio, video, memorie"
      apt:
        name: vlc,pychess,python3-guizero*,zram-tools,sense-emu-tools
      become: yes
@@ -198,24 +201,23 @@
        url: https://infra.unpi.ro/files/imn.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout or ' raspberry ' in idOS.stdout"
-     # unPi mini / Pi Zero este prea incet pentru asta; dar Raspbian Desktop ^ ^ pentru PC/Mac poate
+     when: "'Raspbian' in idOS.stdout or ' raspberry ' in idOS.stdout"
+     # RPi Zero este cam incet; Raspbian Desktop ^^ pentru PC/Mac e ok
 
    - name: "Creez un link pe Desktop pentru Google Meet"
      get_url:
        url: https://infra.unpi.ro/files/meet.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "verificat and 'Zero' not in idPi.stdout"
-     # unPi mini / Pi Zero este prea incet pentru asta
+     when: verificat
 
    - name: "Creez un link pe Desktop pentru cursul online de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/scratch.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout or ' raspberry ' in idOS.stdout"
-     # unPi mini / Pi Zero este prea incet pentru asta; dar Raspbian Desktop ^ ^ pentru PC/Mac poate
+     when: "'Raspbian' in idOS.stdout or ' raspberry ' in idOS.stdout"
+     # RPi Zero este cam incet; Raspbian Desktop ^^ pentru PC/Mac e ok
 
    - name: "Creez un link pe Desktop pentru cursurile video unPi plus"
      get_url:
@@ -261,7 +263,7 @@
        name: scratch
        state: absent
      become: yes
-     when: "beneficiar and 'Raspbian' in idOS.stdout and 'Zero' not in idPi.stdout"
+     when: "beneficiar and 'Raspbian' in idOS.stdout"
 
    - name: "Stergem versiunea veche (v2) a programului Scratch"
      apt:
@@ -334,13 +336,13 @@
        name: libglfw3,libglfw3-dev,libegl1,libxcursor-dev,libxinerama-dev,libxi-dev,libxxf86vm1,libxxf86vm-dev
      become: yes
 
-   - name: "Instalam Emby Theater"
+   - name: "Instalam Emby Theater - media player"
      apt:
        deb: https://github.com/MediaBrowser/emby-theater-electron/releases/download/3.0.15/emby-theater-deb_3.0.15_armhf.deb
      become: yes
      when: verificat
 
-   - name: "Instalam SpeedTest"
+   - name: "Instalam un test de banda in Internet"
      apt:
        name: speedtest-cli
      become: yes
