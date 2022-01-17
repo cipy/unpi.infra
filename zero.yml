@@ -8,52 +8,13 @@
 
   tasks:
 
-    - name: "Instalam VNC Viewer pentru studiul la distanta"
-      apt:
-        name: realvnc-vnc-viewer
-      become: yes
-
     - name: "Pregatesc directorul Desktop pe unPi"
       file:
         dest: ~/Desktop
         state: directory
 
-    - name: "Creez un link pe Desktop pentru VNC Viewer"
-      get_url:
-        url: https://infra.unpi.ro/files/vncviewer.desktop
-        dest: ~/Desktop/
-        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-
-    - name: "Stergem link-urile Desktop de pe unPi mini"
-      file:
-        path: "{{ item }}"
-        state: absent
-      with_items:
-        - ~/Desktop/imn.desktop
-        - ~/Desktop/meet.desktop
-        - ~/Desktop/tastatura.desktop
-        - ~/Desktop/scratch.desktop
-
-    # din pacate Raspberry Pi Zero / unPi mini este chiar lent
-    - name: "Stergem Scratch 3 si Gcompris de pe unPi mini"
-      apt:
-        name: scratch3,gcompris
-        state: absent
-      become: yes
-
-    # dar Scratch v1 pare sa mearga destul de bine
-    - name: "Instalam Scratch v1 pentru unPi mini"
-      apt:
-        name: scratch
-      become: yes
-
     - name: "(pasul urmator va dura mai mult, depinzand de conexiunea ta la Internet)"
       shell: echo; figlet te rog, asteapta
-
-    - name: "Aducem cursul nostru de Scratch pe unPi mini"
-      shell: NOFIG=true bash ~/get.scratch.sh
-      args:
-        removes: ~/get.scratch.sh
 
     - name: "Aducem programul de instalare pentru Blinkt!"
       uri:
