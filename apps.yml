@@ -352,6 +352,11 @@
        name: libglfw3,libglfw3-dev,libegl1,libxcursor-dev,libxinerama-dev,libxi-dev,libxxf86vm1,libxxf86vm-dev
      become: yes
 
+   - name: "Instalam Blender - creez obiecte 3D"
+     apt:
+       name: blender
+     become: yes
+
    - name: "Instalam Sonic Pi - programez muzica"
      apt:
        deb: https://sonic-pi.net/files/releases/v3.3.1/sonic-pi_3.3.1_1_armhf.deb
