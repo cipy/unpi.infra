@@ -115,8 +115,8 @@ export ANSIBLE_STDOUT_CALLBACK=unixy
 [ -s apps.yml ] && ansible-playbook -i localhost, apps.yml
 
 if [ -f /proc/device-tree/model ]; then
-  # este un Pi Zero WH? adica unPi mini
-  if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero" ]]; then
+  # este un RPi Zero 2? adica unPi mini
+  if [[ "$(cat /proc/device-tree/model | tr -d '\0')" =~ "Zero 2" ]]; then
     echo
     echo "Acum facem o configurare specifica pentru unPi mini"
     echo
