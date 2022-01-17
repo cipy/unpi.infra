@@ -27,7 +27,7 @@
      when: esteundar | upper == "DA" or esteundar | bool
 
    # nu este beneficiar daca nu a primit unPi in dar
-   - set_fact: beneficiar=false verificat=false raspbian=false
+   - set_fact: beneficiar=false verificat=false raspbian=false mini=false
      when: esteundar | upper != "DA" and not esteundar | bool
 
    - name: "Pregatesc un director pentru configuratia unPi"
@@ -182,7 +182,23 @@
      apt:
        name: vlc,pychess,python3-guizero*,zram-tools,sense-emu-tools
      become: yes
+     register: zram
      when: "'Raspberry' in idPi.stdout"
+
+   - name: "Configuram compresia memoriei RAM"
+     lineinfile:
+       regexp: "^(.*)ALLOCATION=(.*)"
+       line: 'ALLOCATION=512'
+       path: /etc/default/zramswap
+     become: yes
+     when: mini
+
+   - name: "Activez compresia memoriei interne"
+     shell: systemctl restart zramswap
+     args:
+       warn: no
+     become: yes
+     when: mini and zram is defined and zram is changed
 
    - name: "Pregatesc directorul Desktop pe unPi"
      file:
