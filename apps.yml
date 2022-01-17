@@ -22,13 +22,11 @@
 
   tasks:
 
-   # este beneficiar daca a primit unPi in dar
-   - set_fact: beneficiar=true verificat=false raspbian=false
-     when: esteundar | upper == "DA" or esteundar | bool
+   - set_fact: beneficiar=false raspbian=false mini=false
 
-   # nu este beneficiar daca nu a primit unPi in dar
-   - set_fact: beneficiar=false verificat=false raspbian=false mini=false
-     when: esteundar | upper != "DA" and not esteundar | bool
+   # este beneficiar daca a primit unPi in dar
+   - set_fact: beneficiar=true
+     when: esteundar | upper == "DA" or esteundar | bool
 
    - name: "Pregatesc un director pentru configuratia unPi"
      file:
@@ -217,7 +215,7 @@
        url: https://infra.unpi.ro/files/imn.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "'Raspbian' in idOS.stdout or ' raspberry ' in idOS.stdout"
+     when: "raspbian or ' raspberry ' in idOS.stdout"
      # RPi Zero este cam incet; Raspbian Desktop ^^ pentru PC/Mac e ok
 
    - name: "Creez un link pe Desktop pentru Google Meet"
@@ -232,7 +230,7 @@
        url: https://infra.unpi.ro/files/scratch.desktop
        dest: ~/Desktop/
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: "'Raspbian' in idOS.stdout or ' raspberry ' in idOS.stdout"
+     when: "raspbian or ' raspberry ' in idOS.stdout"
      # RPi Zero este cam incet; Raspbian Desktop ^^ pentru PC/Mac e ok
 
    - name: "Creez un link pe Desktop pentru cursurile video unPi plus"
@@ -279,21 +277,21 @@
        name: scratch
        state: absent
      become: yes
-     when: "beneficiar and 'Raspbian' in idOS.stdout"
+     when: "beneficiar and raspbian"
 
    - name: "Stergem versiunea veche (v2) a programului Scratch"
      apt:
        name: scratch2
        state: absent
      become: yes
-     when: "raspbian is defined and raspbian"
+     when: raspbian
 
    - name: "Stergem editoarele ce nu vor fi folosite in cursurile unPi"
      apt:
        name: geany*,bluej,greenfoot*,smartsim,atsar
        state: absent
      become: yes
-     when: "raspbian is defined and raspbian"
+     when: raspbian
 
    - name: "Activez instalarea automata a programelor din sistemul de operare"
      apt:
@@ -361,7 +359,7 @@
      apt:
        deb: https://sonic-pi.net/files/releases/v3.3.1/sonic-pi_3.3.1_1_armhf.deb
      become: yes
-     when: "beneficiar and 'Raspbian' in idOS.stdout"
+     when: raspbian
 
    - name: "Instalam Emby Theater - media player"
      apt:
@@ -375,7 +373,7 @@
      become: yes
      when: verificat
 
-   # fix.sh va rula periodic de aici
+   # fix.sh va rula periodic de aici // raspbian nu e definit
    - name: "Configurari finale"
      shell: echo; figlet inca putin, ...
 
