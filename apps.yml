@@ -177,7 +177,7 @@
 
    - name: "Instalam programe utilitare pentru continut audio, video, drivers"
      apt:
-       name: vlc,pychess,python3-guizero*,speedtest-cli,sense-emu-tools
+       name: vlc,pychess,python3-guizero*,zram-tools,sense-emu-tools
      become: yes
      when: "'Raspberry' in idPi.stdout"
 
@@ -337,6 +337,12 @@
    - name: "Instalam Emby Theater"
      apt:
        deb: https://github.com/MediaBrowser/emby-theater-electron/releases/download/3.0.15/emby-theater-deb_3.0.15_armhf.deb
+     become: yes
+     when: verificat
+
+   - name: "Instalam SpeedTest"
+     apt:
+       name: speedtest-cli
      become: yes
      when: verificat
 
