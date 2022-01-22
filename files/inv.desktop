@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Invata cu unPi
+Comment=Noutati de la unPi/Telegram
+Icon=sonic-pi
+Exec=midori https://t.me/s/unPi_ro
