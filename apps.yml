@@ -255,12 +255,12 @@
        warn: no
      when: verificat
 
-   - name: "Creez un downloader pentru cursul mai vechi de Scratch"
-     get_url:
-       url: https://infra.unpi.ro/files/get.scratch.sh
-       dest: ~/
-       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
-     when: beneficiar
+#   - name: "Creez un downloader pentru cursul mai vechi de Scratch"
+#     get_url:
+#       url: https://infra.unpi.ro/files/get.scratch.sh
+#       dest: ~/
+#       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+#     when: beneficiar
 
    - name: "Instalam limbajul de programare profesional Golang"
      apt:
