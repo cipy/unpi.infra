@@ -247,6 +247,12 @@
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      when: verificat
 
+   - name: "Configurez afisarea noutatilor unPi la fiecare pornire"
+     shell: |
+       mkdir -p ~/.config/autostart
+       ln -f ~/Desktop/inv.desktop ~/.config/autostart/
+     when: verificat
+
    - name: "Creez un downloader pentru cursul mai vechi de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/get.scratch.sh
