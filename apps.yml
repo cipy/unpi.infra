@@ -240,6 +240,13 @@
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      when: verificat
 
+   - name: "Creez un link pe Desktop pentru a vedea noutatile unPi"
+     get_url:
+       url: https://infra.unpi.ro/files/inv.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     when: verificat
+
    - name: "Creez un downloader pentru cursul mai vechi de Scratch"
      get_url:
        url: https://infra.unpi.ro/files/get.scratch.sh
@@ -369,7 +376,7 @@
 
    - name: "Instalam un test de banda in Internet"
      apt:
-       name: speedtest-cli
+       name: speedtest-cli,midori
      become: yes
      when: verificat
 
