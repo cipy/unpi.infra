@@ -251,6 +251,8 @@
      shell: |
        mkdir -p ~/.config/autostart
        ln -f ~/Desktop/inv.desktop ~/.config/autostart/
+     args:
+       warn: no
      when: verificat
 
    - name: "Creez un downloader pentru cursul mai vechi de Scratch"
