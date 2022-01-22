@@ -22,7 +22,7 @@
 
   tasks:
 
-   - set_fact: beneficiar=false raspbian=false mini=false
+   - set_fact: beneficiar=false verificat=false raspbian=false mini=false
 
    # este beneficiar daca a primit unPi in dar
    - set_fact: beneficiar=true
