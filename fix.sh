@@ -45,8 +45,8 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
         wget -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
         sudo -u pi DISPLAY=:0 python3 /var/run/warn.py &
         lastpid=$!
-        undar=$(sudo cat /root/.unpi/esteundar 2>/dev/null)
-        hashed=$(sudo cat /root/.unpi/hashedcode 2>/dev/null)
+        undar=$(cat /root/.unpi/esteundar 2>/dev/null)
+        hashed=$(cat /root/.unpi/hashedcode 2>/dev/null)
         su -l pi -c "ansible-playbook -i localhost, /var/run/apps.yml -e esteundar='$undar' -e hashedcode='$hashed'"
         touch /tmp/ran.fix.sh
         kill $lastpid
