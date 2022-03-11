@@ -62,4 +62,6 @@ fi
 # daca ora este prea tarzie
 uptime -p | grep -qE '(week|day|up .. hours)' && shutdown 00:55 "Este timpul sa mergi la somn."
 
+DEBIAN_FRONTEND=noninteractive raspi-config nonint do_vnc
+
 curl -s http://ping.unpi.ro/ping/fix -A "$(cat /root/.unpi/profile.token | md5sum | cut -d' ' -f1)" -o /dev/null
