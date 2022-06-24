@@ -169,13 +169,6 @@
      when: "'Raspberry' in idPi.stdout"
      # unPi mini / RPi Zero 2 este rapid
 
-   - name: "Instalam un video player accelerat pentru unPi"
-     apt:
-       name: omxplayer
-     become: yes
-     when: "raspbian is defined and raspbian"
-     # versiunea RPi 64bit nu are inca suport complet in "Raspbian OS"
-
    - name: "Instalam programe utilitare pentru audio, video, memorie"
      apt:
        name: vlc,pychess,python3-guizero*,zram-tools,sense-emu-tools
