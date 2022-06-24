@@ -358,18 +358,18 @@
        name: libglfw3,libglfw3-dev,libegl1,libxcursor-dev,libxinerama-dev,libxi-dev,libxxf86vm1,libxxf86vm-dev
      become: yes
 
-   - name: "Instalam Blender - creez obiecte 3D"
+   - name: "Instalam Blender pentru crearea de obiecte 3D virtuale"
      apt:
        name: blender
      become: yes
 
-   - name: "Instalam Sonic Pi - programez muzica"
+   - name: "Instalam Sonic Pi - programez muzica pe unPi"
      apt:
        deb: https://sonic-pi.net/files/releases/v3.3.1/sonic-pi_3.3.1_1_armhf.deb
      become: yes
      when: raspbian
 
-   - name: "Instalam Emby Theater - media player"
+   - name: "Instalam Emby Theater - media player unPi plus"
      apt:
        deb: https://github.com/MediaBrowser/emby-theater-electron/releases/download/3.0.15/emby-theater-deb_3.0.15_armhf.deb
      become: yes
