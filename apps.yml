@@ -233,6 +233,13 @@
        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
      when: verificat
 
+   - name: "Creez un link pe Desktop pentru lectiile online Math PDR"
+     get_url:
+       url: https://infra.unpi.ro/files/math.desktop
+       dest: ~/Desktop/
+       checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
+     when: verificat
+
    - name: "Creez un link pe Desktop pentru a vedea noutatile unPi"
      get_url:
        url: https://infra.unpi.ro/files/inv.desktop
