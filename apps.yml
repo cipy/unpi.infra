@@ -403,13 +403,13 @@
 #        dest: ~/Desktop/
 #        checksum: sha256:https://infra.unpi.ro/files/sha256sum.txt
 
-  - name: "Stergem din linkurile unPi mai vechi de pe Desktop"
-    file:
-      path: "{{ item }}"
-      state: absent
-      with_items:
-        - ~/Desktop/eng.desktop
-        - ~/Desktop/bb.desktop
+   - name: "Stergem din linkurile unPi mai vechi de pe Desktop"
+     file:
+       path: "{{ item }}"
+       state: absent
+       with_items:
+         - ~/Desktop/eng.desktop
+         - ~/Desktop/bb.desktop
 
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
