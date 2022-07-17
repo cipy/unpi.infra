@@ -407,7 +407,7 @@
      file:
        path: "{{ item }}"
        state: absent
-       with_items:
+       loop:
          - ~/Desktop/eng.desktop
          - ~/Desktop/bb.desktop
 
