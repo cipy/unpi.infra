@@ -407,9 +407,9 @@
      file:
        path: "{{ item }}"
        state: absent
-       loop:
-         - ~/Desktop/eng.desktop
-         - ~/Desktop/bb.desktop
+     loop:
+       - ~/Desktop/eng.desktop
+       - ~/Desktop/bb.desktop
 
    - name: "Pregateste calculatorul unPi pentru audio via Bluetooth"
      shell: |
