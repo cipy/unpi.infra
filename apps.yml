@@ -435,7 +435,7 @@
        touch /var/tmp/unpi.fw.fix
      args:
        warn: no
-       creates: /var/tmp/unpi.fw.fix
+       # creates: /var/tmp/unpi.fw.fix
      become: yes
 
    - name: "Instalarea automata va folosi Raspberry Pi Foundation"
