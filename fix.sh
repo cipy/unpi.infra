@@ -39,8 +39,8 @@ if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
       sync
     fi
 
-    if uptime -p | grep -qE '(hours|day)'; then
-    # dupa 2 ore uptime incercam un full update
+    if uptime -p | grep -qE '(hour|day)'; then
+    # dupa 1 ora uptime incercam un full update
       if [ ! -f /tmp/ran.fix.sh ]; then
         wget -q https://infra.unpi.ro/files/gui/warn.py -O /var/run/warn.py; chmod a+r /var/run/warn.py; sync
         sudo -u pi DISPLAY=:0 python3 /var/run/warn.py &
