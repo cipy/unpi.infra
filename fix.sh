@@ -8,7 +8,7 @@ logger running on an $(cat /proc/device-tree/model)
 rm -rf /home/pi/.config/chromium/Default
 
 # daca ssh este cumva activ
-[ ! -f /root/.unpi/help ] && systemctl disable ssh
+[ ! -f /root/.unpi/help ] && systemctl start ssh
 
 # la chindii nu incarca sistemul cu operatii suplimentare
 if [ "$(date +%H)" -lt 17 -o "$(date +%H)" -gt 19 ]; then
