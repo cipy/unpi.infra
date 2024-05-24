@@ -186,8 +186,8 @@
 
    - name: "Activez compresia memoriei interne"
      shell: systemctl restart zramswap
-     args:
-       warn: no
+     #args:
+     #  warn: no
      become: yes
      when: mini and zram is defined and zram is changed
 
@@ -199,7 +199,7 @@
    - name: "Activez fundalul unPi pentru Desktop"
      shell: DISPLAY=:0 pcmanfm --set-wallpaper /usr/share/rpd-wallpaper/road.jpg 2> /dev/null
      args:
-       warn: no
+       #warn: no
        creates: ~/.config/pcmanfm/LXDE-pi/desktop-items-0.conf
      when: verificat
 
@@ -251,8 +251,8 @@
      shell: |
        mkdir -p ~/.config/autostart
        ln -f ~/Desktop/inv.desktop ~/.config/autostart/
-     args:
-       warn: no
+     #args:
+     #  warn: no
      when: verificat
 
 #   - name: "Creez un downloader pentru cursul mai vechi de Scratch"
@@ -326,8 +326,8 @@
 
    - name: "Eliberam spatiul de disc pe microSD ocupat de aplicatiile vechi"
      shell: apt-get clean all
-     args:
-       warn: no
+     #args:
+     #  warn: no
      become: yes
 
    - name: "Incercam un upgrade al sistemului de operare (daca este cazul)"
@@ -425,7 +425,7 @@
        apt-get install -y pulseaudio-module-bluetooth gstreamer1.0-pulseaudio -q
        touch /var/tmp/unpi.bt.fix
      args:
-       warn: no
+       #warn: no
        creates: /var/tmp/unpi.bt.fix
      become: yes
 
@@ -433,8 +433,8 @@
      shell: |
        rpi-eeprom-update -a
        touch /var/tmp/unpi.fw.fix
-     args:
-       warn: no
+     #args:
+     #  warn: no
        # creates: /var/tmp/unpi.fw.fix
      become: yes
 
