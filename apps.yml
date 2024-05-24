@@ -158,7 +158,7 @@
      # Debian/WSL in Windows nu are (inca) un mediu grafic
    - name: "Instalam mediul educational GCompris pentru copii"
      apt:
-       name: gcompris
+       name: gcompris*
      become: yes
      when: "'Microsoft' not in idOS.stdout"
 
